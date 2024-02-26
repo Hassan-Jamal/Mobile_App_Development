@@ -1,3 +1,4 @@
+import 'package:firstproject/utilis/routes.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
@@ -61,7 +62,7 @@ class LoginPage extends StatelessWidget {
                     child: Text("Login"),
                     style: TextButton.styleFrom(minimumSize: Size(200, 80)),
                     onPressed: () {
-                      print("Welcome to login page");
+                      Navigator.pushNamed(context, MyRoutes.homeRoute);
                     },
                   ),
                 ],

@@ -1,5 +1,6 @@
 import 'package:firstproject/pages/home_page.dart';
 import 'package:firstproject/pages/login_page.dart';
+import 'package:firstproject/utilis/routes.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // home: HomePage(),  //default route but now we add "/" for home
+       home: LoginPage(),  //default route but now we add "/" for home
       themeMode: ThemeMode.dark,
       darkTheme: ThemeData(
         brightness: Brightness.light,
@@ -21,9 +22,8 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: "/",
       routes: {
-        "/": (context) => LoginPage(),
-        "/home": (context) => HomePage(),
-        "/login": (context) => LoginPage(),
+        MyRoutes.loginRoute: (context) => LoginPage(),
+        MyRoutes.homeRoute: (context) => HomePage(),
       },
     );
   }
