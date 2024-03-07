@@ -1,9 +1,9 @@
 import 'package:firstproject/pages/home_page.dart';
 import 'package:firstproject/pages/login_page.dart';
 import 'package:firstproject/utilis/routes.dart';
-import 'package:google_fonts/google_fonts.dart';
+//import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
-
+import 'widgets/themes.dart';
 void main() {
   runApp(MyApp());
 }
@@ -14,13 +14,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      themeMode: ThemeMode.light,
+      theme: MyTheme.lightTheme(context),
+      darkTheme: MyTheme.darkTheme(context),
       debugShowCheckedModeBanner: false,
       home: LoginPage(), //default route but now we add "/" for home
-      themeMode: ThemeMode.dark,
-      darkTheme: ThemeData(
-        brightness: Brightness.light,
-        fontFamily: GoogleFonts.lato().fontFamily,
-      ),
+
       initialRoute: "/",
       routes: {
         MyRoutes.loginRoute: (context) => LoginPage(),
