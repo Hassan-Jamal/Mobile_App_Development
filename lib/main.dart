@@ -14,8 +14,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-     // debugShowCheckedModeBanner: false,  
-       home: LoginPage(),  //default route but now we add "/" for home
+      debugShowCheckedModeBanner: false,
+      home: LoginPage(), //default route but now we add "/" for home
       themeMode: ThemeMode.dark,
       darkTheme: ThemeData(
         brightness: Brightness.light,
