@@ -1,4 +1,6 @@
 import 'package:firstproject/pages/home_page.dart';
+import 'package:firebase_core/firebase_core.dart'; // Import Firebase core
+
 import 'package:firstproject/pages/login_page.dart';
 import 'package:firstproject/utilis/routes.dart';
 //import 'package:google_fonts/google_fonts.dart';
@@ -6,7 +8,10 @@ import 'package:flutter/material.dart';
 import 'widgets/themes.dart';
 //import 'package:firstproject/models/catalog.dart';
 
-void main() {
+//Future<void> main() async {
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp();
+  void main(){
   runApp(MyApp());
 }
 
