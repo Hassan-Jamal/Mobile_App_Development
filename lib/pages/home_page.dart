@@ -6,30 +6,31 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  late String profileName;
+  late String gmailUsername;
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     loadData();
+    // Set default values for profileName and gmailUsername
+    profileName = "Guest";
+    gmailUsername = "guest@gmail.com";
   }
 
   loadData() async {
     await Future.delayed(Duration(seconds: 2));
     final catalogJson =
         await rootBundle.loadString("assets/files/catalog.json");
-    //print(catalogJson);
-    final decodedData = jsonDecode(
-        catalogJson); //string/othertype to json conversion and jsonEncode for json/othertype to String
-    //print(decodedData);
+    final decodedData = jsonDecode(catalogJson);
     var productsData = decodedData["products"];
-    //print(productsData);
     CatalogModel.items = List.from(productsData)
         .map<Item>((item) => Item.fromMap(item))
         .toList();
@@ -41,9 +42,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    //final dummyList = List.generate(50, (index) => CatalogModel.items[0]);
-    int days = 30;
-    String name = "Hassan Jamal";
     return Scaffold(
       appBar: AppBar(
         title: Text("Catalog App"),
@@ -63,7 +61,10 @@ class _HomePageState extends State<HomePage> {
                 child: CircularProgressIndicator(),
               ),
       ),
-      drawer: MyDrawer(),
+      drawer: MyDrawer(
+        profileName: profileName ?? "Guest", // Provide default value if null
+        gmailUsername: gmailUsername ?? "guest@gmail.com", // Provide default value if null
+      ),
     );
   }
 }

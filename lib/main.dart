@@ -2,6 +2,7 @@ import 'package:firstproject/pages/home_page.dart';
 import 'package:firebase_core/firebase_core.dart'; // Import Firebase core
 
 import 'package:firstproject/pages/login_page.dart';
+import 'package:firstproject/pages/signup.dart';
 import 'package:firstproject/utilis/routes.dart';
 //import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
@@ -25,12 +26,14 @@ class MyApp extends StatelessWidget {
       theme: MyTheme.lightTheme(context),
       darkTheme: MyTheme.darkTheme(context),
       debugShowCheckedModeBanner: false,
-      home: LoginPage(), //default route but now we add "/" for home
+     // home: SignUpPage(), //default route but now we add "/" for home
 
       initialRoute: "/",
       routes: {
+        "/": (context) => SignUpPage(),
         MyRoutes.loginRoute: (context) => LoginPage(),
         MyRoutes.homeRoute: (context) => HomePage(),
+        MyRoutes.signUpRoute: (context)=>SignUpPage(),
       },
     );
   }

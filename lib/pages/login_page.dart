@@ -9,6 +9,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   String name = "";
   bool changeButton = false;
+  bool _obscureText = true; // Define _obscureText variable
 
   final _formKey = GlobalKey<FormState>();
 
@@ -20,12 +21,11 @@ class _LoginPageState extends State<LoginPage> {
       await Future.delayed(Duration(seconds: 1));
       await Navigator.pushNamed(context, MyRoutes.homeRoute);
       setState(() {
-        changeButton = false; // Corrected statement
+        changeButton = false;
       });
     }
   }
 
-//
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -75,10 +75,20 @@ class _LoginPageState extends State<LoginPage> {
                       },
                     ),
                     TextFormField(
-                      obscureText: true,
+                      obscureText: _obscureText, // Use _obscureText to toggle visibility
                       decoration: InputDecoration(
                         hintText: "Enter password",
                         labelText: "Password",
+                        suffixIcon: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _obscureText = !_obscureText;
+                            });
+                          },
+                          child: Icon(
+                            _obscureText ? Icons.visibility : Icons.visibility_off,
+                          ),
+                        ),
                       ),
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -129,6 +139,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
+
 // import 'package:flutter/material.dart';
 // import 'package:firstproject/utilis/routes.dart';
 
