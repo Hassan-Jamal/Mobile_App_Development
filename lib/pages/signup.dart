@@ -56,7 +56,9 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(
-                    vertical: 16.0, horizontal: 32.0),
+                  vertical: 16.0,
+                  horizontal: 32.0,
+                ),
                 child: Column(
                   children: [
                     TextFormField(
@@ -107,7 +109,9 @@ class _SignUpPageState extends State<SignUpPage> {
                             });
                           },
                           child: Icon(
-                            _obscureText ? Icons.visibility : Icons.visibility_off,
+                            _obscureText
+                                ? Icons.visibility
+                                : Icons.visibility_off,
                           ),
                         ),
                       ),
@@ -128,30 +132,35 @@ class _SignUpPageState extends State<SignUpPage> {
                     SizedBox(
                       height: 20.0,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text("Already have an account?"),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, MyRoutes.loginRoute);
-                          },
-                          child: Text(
-                            "Login",
-                            style: TextStyle(
-                              color: Colors.blue,
-                              fontWeight: FontWeight.bold,
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Already have an account?"),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                  context, MyRoutes.loginRoute);
+                            },
+                            child: Text(
+                              "Login",
+                              style: TextStyle(
+                                color: Colors.blue,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                     SizedBox(
                       height: 40.0,
                     ),
-                    Material(
+                     Material(
                       color: Colors.deepPurple,
-                      borderRadius: BorderRadius.circular(changeButton ? 50 : 8),
+                      borderRadius:
+                          BorderRadius.circular(changeButton ? 50 : 8),
                       child: InkWell(
                         onTap: () => moveToHome(context),
                         child: AnimatedContainer(
@@ -165,12 +174,11 @@ class _SignUpPageState extends State<SignUpPage> {
                                   color: Colors.white,
                                 )
                               : Text(
-                                  "Sign Up",
+                                  "Signup",
                                   style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18,
-                                  ),
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18),
                                 ),
                         ),
                       ),

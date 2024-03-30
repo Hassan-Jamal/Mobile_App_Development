@@ -1,0 +1,102 @@
+[
+  {
+      "name": "Software Development Fundamentals",
+      "description": "Learn the basics of software development.",
+      "price": 99.99
+  },
+  {
+      "name": "Data Structures and Algorithms",
+      "description": "Master essential data structures and algorithms.",
+      "price": 129.99
+  },
+  {
+      "name": "Object-Oriented Programming",
+      "description": "Understand the principles of OOP and its implementation.",
+      "price": 149.99
+  },
+  {
+      "name": "Software Design and Architecture",
+      "description": "Learn about software design principles and architecture patterns.",
+      "price": 159.99
+  },
+  {
+      "name": "Database Management Systems",
+      "description": "Explore the fundamentals of database management.",
+      "price": 139.99
+  },
+  {
+      "name": "Web Development",
+      "description": "Build dynamic web applications with modern web technologies.",
+      "price": 179.99
+  },
+  {
+      "name": "Operating Systems",
+      "description": "Study the principles and functions of operating systems.",
+      "price": 119.99
+  },
+  {
+      "name": "Computer Networks",
+      "description": "Understand how data is transmitted over computer networks.",
+      "price": 169.99
+  },
+  {
+      "name": "Software Testing and Quality Assurance",
+      "description": "Master software testing techniques and QA processes.",
+      "price": 149.99
+  },
+  {
+      "name": "User Interface/User Experience (UI/UX) Design",
+      "description": "Learn to design intuitive and user-friendly interfaces.",
+      "price": 159.99
+  },
+  {
+      "name": "Agile Software Development",
+      "description": "Adopt agile methodologies for efficient software development.",
+      "price": 169.99
+  },
+  {
+      "name": "Mobile Application Development",
+      "description": "Build mobile apps for iOS and Android platforms.",
+      "price": 179.99
+  },
+  {
+      "name": "Artificial Intelligence and Machine Learning",
+      "description": "Explore AI and ML algorithms for intelligent applications.",
+      "price": 189.99
+  },
+  {
+      "name": "Cybersecurity",
+      "description": "Protect systems and networks from cyber threats and attacks.",
+      "price": 199.99
+  },
+  {
+      "name": "Cloud Computing",
+      "description": "Deploy and manage applications in cloud environments.",
+      "price": 209.99
+  },
+  {
+      "name": "Big Data Analytics",
+      "description": "Analyze large datasets to extract valuable insights.",
+      "price": 219.99
+  },
+  {
+      "name": "DevOps",
+      "description": "Implement DevOps practices for continuous integration and delivery.",
+      "price": 229.99
+  },
+  {
+      "name": "Software Project Management",
+      "description": "Plan and manage software projects effectively.",
+      "price": 239.99
+  },
+  {
+      "name": "Software Requirements Engineering",
+      "description": "Gather, document, and manage software requirements.",
+      "price": 249.99
+  },
+  {
+      "name": "Human-Computer Interaction (HCI)",
+      "description": "Design interactive systems that enhance user experience.",
+      "price": 259.99
+  }
+]

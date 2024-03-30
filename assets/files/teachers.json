@@ -1,0 +1,87 @@
+[
+  {
+    "name": "John Smith",
+    "specification": "Software Engineer",
+    "experience": "10 years"
+  },
+  {
+    "name": "Emily Johnson",
+    "specification": "Computer Scientist",
+    "experience": "8 years"
+  },
+  {
+    "name": "Michael Brown",
+    "specification": "Software Developer",
+    "experience": "12 years"
+  },
+  {
+    "name": "Sarah Wilson",
+    "specification": "Systems Architect",
+    "experience": "15 years"
+  },
+  {
+    "name": "David Martinez",
+    "specification": "Database Administrator",
+    "experience": "10 years"
+  },
+  {
+    "name": "Jessica Lee",
+    "specification": "Web Developer",
+    "experience": "8 years"
+  },
+  {
+    "name": "Andrew Thompson",
+    "specification": "Systems Engineer",
+    "experience": "12 years"
+  },
+  {
+    "name": "Megan Davis",
+    "specification": "Network Engineer",
+    "experience": "10 years"
+  },
+  {
+    "name": "Kevin Wilson",
+    "specification": "Quality Assurance Engineer",
+    "experience": "8 years"
+  },
+  {
+    "name": "Rachel Miller",
+    "specification": "UI/UX Designer",
+    "experience": "10 years"
+  },
+  {
+    "name": "Chris Clark",
+    "specification": "Agile Coach",
+    "experience": "12 years"
+  },
+  {
+    "name": "Laura Harris",
+    "specification": "Mobile Developer",
+    "experience": "8 years"
+  },
+  {
+    "name": "Daniel White",
+    "specification": "AI Engineer",
+    "experience": "10 years"
+  },
+  {
+    "name": "Alexandra Taylor",
+    "specification": "Cybersecurity Analyst",
+    "experience": "12 years"
+  },
+  {
+    "name": "Matthew Rodriguez",
+    "specification": "Cloud Architect",
+    "experience": "10 years"
+  },
+  {
+    "name": "Emma Garcia",
+    "specification": "Data Analyst",
+    "experience": "8 years"
+  },
+  {
+    "name": "Ryan Martinez",
+    "specification": "DevOps Engineer",
+    "experience": "10 years"
+  }
+]
