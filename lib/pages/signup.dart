@@ -1,3 +1,6 @@
+ import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firstproject/auth.dart';
+import 'package:firstproject/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firstproject/utilis/routes.dart';
 
@@ -12,7 +15,59 @@ class _SignUpPageState extends State<SignUpPage> {
   String password = "";
   bool changeButton = false;
   bool _obscureText = true;
+String? errorMessage = '';
+  final TextEditingController _controllerEmail = TextEditingController();
+  final TextEditingController _controllerPassword = TextEditingController();
 
+  Future<void> createUserWithEmailAndPassword() async {
+    try {
+      await Auth().createUserWithEmailAndPassword(
+        email: _controllerEmail.text,
+        password: _controllerPassword.text,
+      );
+      // Navigate to the login page after successful signup
+      Navigator.pushReplacementNamed(context, '/login');
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        errorMessage = e.message;
+      });
+    }
+  }
+
+  // Function to navigate to the login page
+  void _goToLoginPage() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => LoginPage()),
+    );
+  }
+
+  Widget _title() {
+    return const Text('Firebase Auth');
+  }
+
+  Widget _entryField(
+    String title,
+    TextEditingController controller,
+  ) {
+    return TextField(
+      controller: controller,
+      decoration: InputDecoration(
+        labelText: title,
+      ),
+    );
+  }
+
+  Widget _errorMessage() {
+    return Text(errorMessage == '' ? '' : 'Try Again ! $errorMessage');
+  }
+
+  Widget _submitButton() {
+    return ElevatedButton(
+      onPressed: createUserWithEmailAndPassword,
+      child: const Text('Register'),
+    );
+  }
   final _formKey = GlobalKey<FormState>();
 
   moveToHome(BuildContext context) async {
@@ -37,6 +92,7 @@ class _SignUpPageState extends State<SignUpPage> {
           key: _formKey,
           child: Column(
             children: [
+              
               Image.asset(
                 "assets/images/signup_image.png",
                 fit: BoxFit.cover,
@@ -140,8 +196,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           Text("Already have an account?"),
                           TextButton(
                             onPressed: () {
-                              Navigator.pushNamed(
-                                  context, MyRoutes.loginRoute);
+                              Navigator.pushNamed(context, MyRoutes.loginRoute);
                             },
                             child: Text(
                               "Login",
@@ -157,7 +212,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     SizedBox(
                       height: 40.0,
                     ),
-                     Material(
+                    Material(
                       color: Colors.deepPurple,
                       borderRadius:
                           BorderRadius.circular(changeButton ? 50 : 8),

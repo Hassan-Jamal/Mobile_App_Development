@@ -1,3 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firstproject/auth.dart';
+import 'package:firstproject/pages/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:firstproject/utilis/routes.dart';
 
@@ -10,7 +13,59 @@ class _LoginPageState extends State<LoginPage> {
   String name = "";
   bool changeButton = false;
   bool _obscureText = true; // Define _obscureText variable
+  String? errorMessage = '';
+  final TextEditingController _controllerEmail = TextEditingController();
+  final TextEditingController _controllerPassword = TextEditingController();
 
+  Future<void> signInWithEmailAndPassword() async {
+    try {
+      await Auth().signInWithEmailAndPassword(
+        email: _controllerEmail.text,
+        password: _controllerPassword.text,
+      );
+      // Navigate to the home page after successful login
+      Navigator.pushReplacementNamed(context, '/home');
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        errorMessage = e.message;
+      });
+    }
+  }
+
+  // Function to navigate to the signup page
+  void _goToSignUpPage() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => SignUpPage()),
+    );
+  }
+
+  Widget _title() {
+    return const Text('Firebase Auth');
+  }
+
+  Widget _entryField(
+    String title,
+    TextEditingController controller,
+  ) {
+    return TextField(
+      controller: controller,
+      decoration: InputDecoration(
+        labelText: title,
+      ),
+    );
+  }
+
+  Widget _errorMessage() {
+    return Text(errorMessage == '' ? '' : 'Try Again ! $errorMessage');
+  }
+
+  Widget _submitButton() {
+    return ElevatedButton(
+      onPressed: signInWithEmailAndPassword,
+      child: const Text('Login'),
+    );
+  }
   final _formKey = GlobalKey<FormState>();
 
   moveToHome(BuildContext context) async {

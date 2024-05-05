@@ -1,7 +1,11 @@
+import 'package:firstproject/pages/ChangePasswordPage.dart';
+import 'package:firstproject/pages/EditProfilePage.dart';
+import 'package:firstproject/pages/discussion_forum_page.dart';
 import 'package:firstproject/pages/home_page.dart';
 import 'package:firebase_core/firebase_core.dart'; // Import Firebase core
 import 'package:firstproject/firebase_options.dart';
 import 'package:firstproject/pages/login_page.dart';
+import 'package:firstproject/pages/manage_profile.dart';
 import 'package:firstproject/pages/signup.dart';
 import 'package:firstproject/utilis/routes.dart';
 import 'package:flutter/foundation.dart';
@@ -19,7 +23,7 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,13 +32,16 @@ class MyApp extends StatelessWidget {
       theme: MyTheme.lightTheme(context),
       darkTheme: MyTheme.darkTheme(context),
       debugShowCheckedModeBanner: false,
-      initialRoute: "/",
+      initialRoute: MyRoutes.loginRoute, // Change initial route to loginRoute
       routes: {
-        "/": (context) => SignUpPage(),
         MyRoutes.loginRoute: (context) => LoginPage(),
         MyRoutes.homeRoute: (context) => HomePage(),
         MyRoutes.signUpRoute: (context) => SignUpPage(),
+       '/manage_profile': (context) => ManageProfile(), // Add manage_profile route
+        '/discussion_form': (context) => DiscussionForumPage(),
+       // '/discussion_form': (context) => DiscussionForm(),
       },
     );
   }
 }
+
