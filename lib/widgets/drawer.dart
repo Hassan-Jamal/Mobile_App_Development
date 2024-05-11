@@ -1,18 +1,15 @@
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firstproject/pages/discussion_forum_page.dart';
+import 'package:firstproject/pages/home_page.dart';
+import 'package:firstproject/pages/manage_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MyDrawer extends StatefulWidget {
-  const MyDrawer({
-    Key? key,
-    required this.profileName,
-    required this.gmailUsername,
-  }) : super(key: key);
-
-  final String profileName;
-  final String gmailUsername;
+  const MyDrawer({Key? key}) : super(key: key);
 
   @override
   State<MyDrawer> createState() => _MyDrawerState();
@@ -20,36 +17,60 @@ class MyDrawer extends StatefulWidget {
 
 class _MyDrawerState extends State<MyDrawer> {
   late String _imagePath;
+  String _profileName = "";
+  String _gmailUsername = "";
+  final String _cacheKey = "profile_picture";
 
   @override
   void initState() {
     super.initState();
-    _loadImagePath(); // Load image path from shared preferences when the drawer is initialized
+    _loadUserInformation();
   }
 
-  // Function to load image path from shared preferences
-  Future<void> _loadImagePath() async {
+  Future<void> _loadUserInformation() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      _imagePath = prefs.getString('imagePath') ?? "assets/images/profile_image.png";
+      _imagePath = prefs.getString(_cacheKey) ?? "";
     });
-  }
+    // Load other user information here
+      User? user = FirebaseAuth.instance.currentUser;
+  if (user != null) {
+    _profileName = user.displayName ?? "";
+    _gmailUsername = user.email ?? "";
 
-  // Function to save image path to shared preferences
-  Future<void> _saveImagePath(String path) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('imagePath', path);
-  }
 
-  // Function to get image from gallery
+    if (_imagePath != "assets/images/camera.png") {
+      prefs.setString(_cacheKey, _imagePath); // Save the image path to SharedPreferences
+    }
+  } else {
+    _profileName = "Guest";
+    _gmailUsername = "guest@gmail.com";
+  }
+}
+  
+
   Future<void> _getImage() async {
     final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
+      File imageFile = File(pickedFile.path);
       setState(() {
-        _imagePath = pickedFile.path; // Store the selected image path
-        _saveImagePath(_imagePath); // Save image path to shared preferences
+        _imagePath = pickedFile.path;
       });
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString(_cacheKey, _imagePath); // Save the image path to SharedPreferences
+
+      // You can also save the image bytes to cache or storage if needed
+    }
+  }
+
+Future<void> _signOut() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      Navigator.pushReplacementNamed(context, '/login');
+    } catch (e) {
+      print('Sign out failed: $e');
     }
   }
 
@@ -66,89 +87,89 @@ class _MyDrawerState extends State<MyDrawer> {
               child: UserAccountsDrawerHeader(
                 margin: EdgeInsets.zero,
                 accountName: Text(
-                  widget.profileName,
-                  style: TextStyle(
+                  _profileName,
+                  style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
                 ),
                 accountEmail: Text(
-                  widget.gmailUsername,
-                  style: TextStyle(
+                  _gmailUsername,
+                  style: const TextStyle(
                     fontSize: 16,
                     color: Colors.white,
                   ),
                 ),
                 currentAccountPicture: GestureDetector(
-                  onTap: _getImage, // Open gallery on avatar tap
+                  onTap: _getImage,
                   child: CircleAvatar(
                     backgroundColor: Colors.white,
-                    child: ClipOval(
-                      child: _imagePath.startsWith("assets/") // Check if default or selected image
-                          ? Image.asset(
-                              _imagePath,
-                              width: 80,
-                              height: 80,
-                              fit: BoxFit.cover,
-                            )
-                          : Image.file(
-                              File(_imagePath),
-                              width: 80,
-                              height: 80,
-                              fit: BoxFit.cover,
-                            ),
-                    ),
+                    backgroundImage: _imagePath.isNotEmpty && _imagePath != "assets/images/camera.png"
+                        ? FileImage(File(_imagePath))
+                        : AssetImage("assets/images/camera.png") as ImageProvider<Object>,
+                    radius: 40,
                   ),
                 ),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.deepPurple,
                 ),
               ),
             ),
-            ListTile(
-              leading: Icon(
-                CupertinoIcons.home,
-                color: Colors.white,
-              ),
+            // Other list tile items
+              ListTile(
+              leading: Icon(Icons.home, color: Colors.white),
               title: Text(
-                "Home",
-                textScaleFactor: 1.2,
+                'Home',
                 style: TextStyle(color: Colors.white),
               ),
               onTap: () {
-                // Navigate to the home page
-                Navigator.pushReplacementNamed(context, '/home');
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomePage()),
+                );
               },
             ),
             ListTile(
-              leading: Icon(
-                CupertinoIcons.profile_circled,
-                color: Colors.white,
-              ),
+              leading: Icon(Icons.person, color: Colors.white),
               title: Text(
-                "Profile",
-                textScaleFactor: 1.2,
+                'Profile',
                 style: TextStyle(color: Colors.white),
               ),
               onTap: () {
-                // Navigate to the manage_profile page
-                Navigator.pushReplacementNamed(context, '/manage_profile');
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => ManageProfile()),
+                );
               },
             ),
             ListTile(
-              leading: Icon(
-                CupertinoIcons.mail,
-                color: Colors.white,
-              ),
+              leading: Icon(Icons.logout, color: Colors.white),
               title: Text(
-                "Mail",
-                textScaleFactor: 1.2,
+                'Logout',
+                style: TextStyle(color: Colors.white),
+              ),
+              onTap: _signOut,
+            ),
+            Divider(color: Colors.white),
+            ListTile(
+              leading: Icon(Icons.settings, color: Colors.white),
+              title: Text(
+                'Settings',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.feedback, color: Colors.white),
+              title: Text(
+                'Send Feedback',
                 style: TextStyle(color: Colors.white),
               ),
               onTap: () {
-                // Navigate to the discussion form page
-                Navigator.pushReplacementNamed(context, '/discussion_form');
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => DiscussionForumPage()),
+                 );
               },
             ),
           ],

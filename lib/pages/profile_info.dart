@@ -4,22 +4,22 @@ class ProfileInfo extends StatelessWidget {
   final String profileName;
   final String gmailUsername;
 
-  ProfileInfo({required this.profileName, required this.gmailUsername});
+  ProfileInfo({super.key, required this.profileName, required this.gmailUsername});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 4,
-      margin: EdgeInsets.symmetric(vertical: 8),
+      margin: const EdgeInsets.symmetric(vertical: 8),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
       child: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               "Profile Information",
               style: TextStyle(
                 fontSize: 24,
@@ -27,16 +27,16 @@ class ProfileInfo extends StatelessWidget {
                 color: Colors.deepPurple,
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.person,
                 color: Colors.deepPurple,
                 size: 40,
               ),
               title: Text(
                 profileName,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: Colors.deepPurple,

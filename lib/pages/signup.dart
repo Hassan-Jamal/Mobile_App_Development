@@ -1,6 +1,4 @@
- import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firstproject/auth.dart';
-import 'package:firstproject/pages/login_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firstproject/utilis/routes.dart';
 
@@ -15,18 +13,23 @@ class _SignUpPageState extends State<SignUpPage> {
   String password = "";
   bool changeButton = false;
   bool _obscureText = true;
-String? errorMessage = '';
+  String? errorMessage = '';
+  final TextEditingController _controllerName = TextEditingController();
   final TextEditingController _controllerEmail = TextEditingController();
   final TextEditingController _controllerPassword = TextEditingController();
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  Future<void> createUserWithEmailAndPassword() async {
+  Future<void> createUser() async {
     try {
-      await Auth().createUserWithEmailAndPassword(
-        email: _controllerEmail.text,
-        password: _controllerPassword.text,
+      UserCredential userCredential =
+          await _firebaseAuth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
       );
       // Navigate to the login page after successful signup
-      Navigator.pushReplacementNamed(context, '/login');
+      if (userCredential.user != null) {
+        Navigator.pushReplacementNamed(context, MyRoutes.loginRoute);
+      }
     } on FirebaseAuthException catch (e) {
       setState(() {
         errorMessage = e.message;
@@ -34,40 +37,6 @@ String? errorMessage = '';
     }
   }
 
-  // Function to navigate to the login page
-  void _goToLoginPage() {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => LoginPage()),
-    );
-  }
-
-  Widget _title() {
-    return const Text('Firebase Auth');
-  }
-
-  Widget _entryField(
-    String title,
-    TextEditingController controller,
-  ) {
-    return TextField(
-      controller: controller,
-      decoration: InputDecoration(
-        labelText: title,
-      ),
-    );
-  }
-
-  Widget _errorMessage() {
-    return Text(errorMessage == '' ? '' : 'Try Again ! $errorMessage');
-  }
-
-  Widget _submitButton() {
-    return ElevatedButton(
-      onPressed: createUserWithEmailAndPassword,
-      child: const Text('Register'),
-    );
-  }
   final _formKey = GlobalKey<FormState>();
 
   moveToHome(BuildContext context) async {
@@ -75,8 +44,8 @@ String? errorMessage = '';
       setState(() {
         changeButton = true;
       });
-      await Future.delayed(Duration(seconds: 1));
-      await Navigator.pushNamed(context, MyRoutes.loginRoute);
+      await Future.delayed(const Duration(seconds: 1));
+      await createUser();
       setState(() {
         changeButton = false;
       });
@@ -92,22 +61,21 @@ String? errorMessage = '';
           key: _formKey,
           child: Column(
             children: [
-              
               Image.asset(
                 "assets/images/signup_image.png",
                 fit: BoxFit.cover,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20.0,
               ),
-              Text(
+              const Text(
                 "Sign Up",
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20.0,
               ),
               Padding(
@@ -118,7 +86,8 @@ String? errorMessage = '';
                 child: Column(
                   children: [
                     TextFormField(
-                      decoration: InputDecoration(
+                      controller: _controllerName,
+                      decoration: const InputDecoration(
                         hintText: "Enter username",
                         labelText: "Username",
                       ),
@@ -135,7 +104,8 @@ String? errorMessage = '';
                       },
                     ),
                     TextFormField(
-                      decoration: InputDecoration(
+                      controller: _controllerEmail,
+                      decoration: const InputDecoration(
                         hintText: "Enter email",
                         labelText: "Email",
                       ),
@@ -154,6 +124,7 @@ String? errorMessage = '';
                       },
                     ),
                     TextFormField(
+                      controller: _controllerPassword,
                       obscureText: _obscureText,
                       decoration: InputDecoration(
                         hintText: "Enter password",
@@ -185,7 +156,7 @@ String? errorMessage = '';
                         setState(() {});
                       },
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
                     SingleChildScrollView(
@@ -193,12 +164,12 @@ String? errorMessage = '';
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text("Already have an account?"),
+                          const Text("Already have an account?"),
                           TextButton(
                             onPressed: () {
                               Navigator.pushNamed(context, MyRoutes.loginRoute);
                             },
-                            child: Text(
+                            child: const Text(
                               "Login",
                               style: TextStyle(
                                 color: Colors.blue,
@@ -209,7 +180,7 @@ String? errorMessage = '';
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 40.0,
                     ),
                     Material(
@@ -219,16 +190,16 @@ String? errorMessage = '';
                       child: InkWell(
                         onTap: () => moveToHome(context),
                         child: AnimatedContainer(
-                          duration: Duration(seconds: 1),
+                          duration: const Duration(seconds: 1),
                           width: changeButton ? 50 : 150,
                           height: 50,
                           alignment: Alignment.center,
                           child: changeButton
-                              ? Icon(
+                              ? const Icon(
                                   Icons.done,
                                   color: Colors.white,
                                 )
-                              : Text(
+                              : const Text(
                                   "Signup",
                                   style: TextStyle(
                                       color: Colors.white,
@@ -237,6 +208,10 @@ String? errorMessage = '';
                                 ),
                         ),
                       ),
+                    ),
+                    SizedBox(
+                      height: 20.0,
+                      child: errorMessage == '' ? null : Text(errorMessage!),
                     ),
                   ],
                 ),

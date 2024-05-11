@@ -1,3 +1,6 @@
+// ignore: file_names
+// ignore: file_names
+// ignore: file_names
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,7 +17,10 @@ class Subject {
   });
 }
 class AcademicPage extends StatefulWidget {
+  const AcademicPage({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _AcademicPageState createState() => _AcademicPageState();
 }
 
@@ -52,7 +58,7 @@ class _AcademicPageState extends State<AcademicPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Academic Page'),
+        title: const Text('Academic Page'),
       ),
       body: Column(
         children: [
@@ -63,7 +69,7 @@ class _AcademicPageState extends State<AcademicPage> {
               onChanged: (value) {
                 setState(() {});
               },
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Search',
                 prefixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(),
@@ -79,30 +85,30 @@ class _AcademicPageState extends State<AcademicPage> {
                     !subject.name.toLowerCase().contains(
                           searchController.text.toLowerCase(),
                         )) {
-                  return SizedBox.shrink();
+                  return const SizedBox.shrink();
                 }
                 return Card(
                   elevation: 4,
-                  margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                   child: ListTile(
-                    contentPadding: EdgeInsets.all(16),
+                    contentPadding: const EdgeInsets.all(16),
                     title: Text(
                       subject.name,
                       style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         Text(
                           subject.description,
-                          style: TextStyle(fontSize: 14),
+                          style: const TextStyle(fontSize: 14),
                         ),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         Text(
                           '\$${subject.price.toStringAsFixed(2)}',
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                       ],
@@ -113,7 +119,7 @@ class _AcademicPageState extends State<AcademicPage> {
                           cart.add(subject);
                         });
                       },
-                      child: Icon(Icons.add_shopping_cart),
+                      child: const Icon(Icons.add_shopping_cart),
                     ),
                   ),
                 );
@@ -129,7 +135,7 @@ class _AcademicPageState extends State<AcademicPage> {
                   title: Text(item.name),
                   subtitle: Text('\$${item.price.toStringAsFixed(2)}'),
                   trailing: IconButton(
-                    icon: Icon(Icons.remove_shopping_cart),
+                    icon: const Icon(Icons.remove_shopping_cart),
                     onPressed: () {
                       setState(() {
                         cart.removeAt(index);
@@ -146,7 +152,7 @@ class _AcademicPageState extends State<AcademicPage> {
     alignment: Alignment.bottomLeft,
     child: Text(
       'Total: \$${calculateTotalPrice().toStringAsFixed(2)}',
-      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
     ),
   ),
 ),
@@ -157,8 +163,8 @@ class _AcademicPageState extends State<AcademicPage> {
         onPressed: () {
           _showAddSubjectDialog();
         },
-        label: Text('Add Subject'),
-        icon: Icon(Icons.add),
+        label: const Text('Add Subject'),
+        icon: const Icon(Icons.add),
         backgroundColor: Colors.deepPurple,
       ),
     );
@@ -169,7 +175,7 @@ class _AcademicPageState extends State<AcademicPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Add New Subject'),
+          title: const Text('Add Demanded Subject'),
           content: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -177,16 +183,16 @@ class _AcademicPageState extends State<AcademicPage> {
               children: <Widget>[
                 TextField(
                   controller: subjectNameController,
-                  decoration: InputDecoration(labelText: 'Subject Name'),
+                  decoration: const InputDecoration(labelText: 'Subject Name'),
                 ),
                 TextField(
                   controller: subjectDescriptionController,
-                  decoration: InputDecoration(labelText: 'Description'),
+                  decoration: const InputDecoration(labelText: 'Description'),
                 ),
                 TextField(
                   controller: subjectPriceController,
                   keyboardType: TextInputType.number,
-                  decoration: InputDecoration(labelText: 'Price'),
+                  decoration: const InputDecoration(labelText: 'Price'),
                 ),
               ],
             ),
@@ -196,14 +202,14 @@ class _AcademicPageState extends State<AcademicPage> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
             ElevatedButton(
               onPressed: () {
                 _addSubject();
                 Navigator.of(context).pop();
               },
-              child: Text('Add'),
+              child: const Text('Add'),
             ),
           ],
         );

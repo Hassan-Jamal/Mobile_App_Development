@@ -1,5 +1,3 @@
-import 'package:firstproject/pages/ChangePasswordPage.dart';
-import 'package:firstproject/pages/EditProfilePage.dart';
 import 'package:firstproject/pages/discussion_forum_page.dart';
 import 'package:firstproject/pages/home_page.dart';
 import 'package:firebase_core/firebase_core.dart'; // Import Firebase core
@@ -8,7 +6,6 @@ import 'package:firstproject/pages/login_page.dart';
 import 'package:firstproject/pages/manage_profile.dart';
 import 'package:firstproject/pages/signup.dart';
 import 'package:firstproject/utilis/routes.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'widgets/themes.dart';
@@ -19,7 +16,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -34,11 +31,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: MyRoutes.loginRoute, // Change initial route to loginRoute
       routes: {
-        MyRoutes.loginRoute: (context) => LoginPage(),
-        MyRoutes.homeRoute: (context) => HomePage(),
+        MyRoutes.loginRoute: (context) => const LoginPage(),
+        MyRoutes.homeRoute: (context) => const HomePage(),
         MyRoutes.signUpRoute: (context) => SignUpPage(),
-       '/manage_profile': (context) => ManageProfile(), // Add manage_profile route
-        '/discussion_form': (context) => DiscussionForumPage(),
+       '/manage_profile': (context) => const ManageProfile(), // Add manage_profile route
+        '/discussion_form': (context) => const DiscussionForumPage(),
        // '/discussion_form': (context) => DiscussionForm(),
       },
     );

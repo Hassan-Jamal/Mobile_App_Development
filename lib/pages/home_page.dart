@@ -3,51 +3,37 @@ import 'package:firstproject/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:firstproject/pages/academicPage.dart';
+import 'package:firstproject/pages/academic_page.dart';
 import 'package:firstproject/pages/discussion_forum_page.dart';
 import 'package:firstproject/pages/manage_profile.dart';
 import 'package:firstproject/pages/profile_info.dart';
+import 'package:firstproject/pages/free_resources.dart'; 
 
 class HomePage extends StatelessWidget {
-  HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key});
 
   Future<void> signOut(BuildContext context) async {
     try {
       await FirebaseAuth.instance.signOut();
-      Navigator.pushReplacementNamed(context, '/login'); // Navigate back to login page
+      Navigator.pushReplacementNamed(context, '/login'); 
     } catch (e) {
       print('Sign out failed: $e');
     }
-  }
-
-  Widget _title() {
-    return const Text('Firebase Auth');
-  }
-
-  Widget _userEmail(User? user) {
-    return Text(user?.email ?? 'User email');
-  }
-
-  Widget _signOutButton(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () => signOut(context),
-      child: const Text('Sign Out'),
-    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("E-Learning Platform"),
+        title: const Text("E-Learning Platform"),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ProfileInfo(profileName: "Guest", gmailUsername: "guest@gmail.com"),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             _buildModuleCard(
               title: 'Google Classroom',
               icon: Icons.class_,
@@ -55,40 +41,51 @@ class HomePage extends StatelessWidget {
                 _launchURL('https://classroom.google.com/');
               },
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             _buildModuleCard(
               title: 'Academic',
               icon: Icons.school,
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => AcademicPage()),
+                  MaterialPageRoute(builder: (context) => const AcademicPage()),
                 );
               },
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
+            _buildModuleCard(
+              title: 'Free Resources',
+              icon: Icons.school,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => FreeResourcesPage()), 
+                );
+              },
+            ),
+            const SizedBox(height: 16),
             _buildModuleCard(
               title: 'Discussion Forum',
               icon: Icons.chat,
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => DiscussionForumPage()),
+                  MaterialPageRoute(builder: (context) => const DiscussionForumPage()),
                 );
               },
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             _buildModuleCard(
               title: 'Manage Profile',
               icon: Icons.person,
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ManageProfile()),
+                  MaterialPageRoute(builder: (context) => const ManageProfile()),
                 );
               },
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             _buildModuleCard(
               title: 'Share App',
               icon: Icons.share,
@@ -99,10 +96,7 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
-      drawer: MyDrawer(
-        profileName: "Guest",
-        gmailUsername: "guest@gmail.com",
-      ),
+      drawer: MyDrawer(), // No need to provide profileName, gmailUsername, or userEmail here
     );
   }
 
@@ -114,14 +108,13 @@ class HomePage extends StatelessWidget {
     }
   }
 
-void _shareApp() {
-  try {
-    Share.share('Check out this awesome e-learning app!');
-  } catch (e) {
-    print('Error sharing app: $e');
-    // Handle the error accordingly, such as showing a dialog to the user
+  void _shareApp() {
+    try {
+      Share.share('Check out this awesome e-learning app!');
+    } catch (e) {
+      print('Error sharing app: $e');
+    }
   }
-}
 
   Widget _buildModuleCard({
     required String title,
@@ -130,17 +123,16 @@ void _shareApp() {
   }) {
     return Card(
       elevation: 4,
-      margin: EdgeInsets.only(bottom: 16),
-      color: Colors.deepPurple, // Use deepPurple color
+      margin: const EdgeInsets.only(bottom: 16),
+      color: Colors.deepPurple, 
       child: ListTile(
-        leading: Icon(icon, color: Colors.white), // Set icon color to white
+        leading: Icon(icon, color: Colors.white), 
         title: Text(
           title,
-          style: TextStyle(color: Colors.white), // Set text color to white
+          style: const TextStyle(color: Colors.white), 
         ),
         onTap: onTap,
       ),
     );
   }
 }
-

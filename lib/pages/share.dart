@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 
 class SharePage extends StatelessWidget {
+  const SharePage({super.key});
+
   void shareContent(String content, {String? subject}) {
     Share.share(content, subject: subject);
   }
@@ -10,7 +12,7 @@ class SharePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Share'),
+        title: const Text('Share'),
       ),
       body: Center(
         child: Column(
@@ -20,23 +22,23 @@ class SharePage extends StatelessWidget {
               onPressed: () {
                 shareContent('Check out this awesome app! Shared via WhatsApp');
               },
-              child: Text('Share via WhatsApp'),
+              child: const Text('Share via WhatsApp'),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 shareContent('Check out this awesome app! Shared via email',
                     subject: 'Check out this app');
               },
-              child: Text('Share via Email'),
+              child: const Text('Share via Email'),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 shareContent(
                     'Check out this awesome app! Shared via other apps');
               },
-              child: Text('Share via Other Apps'),
+              child: const Text('Share via Other Apps'),
             ),
           ],
         ),

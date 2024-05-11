@@ -1,38 +1,61 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class EditProfilePage extends StatelessWidget {
+class EditProfilePage extends StatefulWidget {
   const EditProfilePage({Key? key}) : super(key: key);
 
-  Future<void> _updateProfile(BuildContext context) async {
+  @override
+  _EditProfilePageState createState() => _EditProfilePageState();
+}
+
+class _EditProfilePageState extends State<EditProfilePage> {
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserInfo();
+  }
+
+  Future<void> _loadUserInfo() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      setState(() {
+        _usernameController.text = user.displayName ?? '';
+        _emailController.text = user.email ?? '';
+      });
+    }
+  }
+
+  Future<void> _updateProfile() async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       try {
-        await user.updateProfile(
-          displayName: 'Updated Name', // Get the updated name from the text field
-          photoURL: 'https://example.com/profile.jpg', // Optionally update photo URL
-        );
-        // Profile updated successfully
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              'Profile updated successfully.',
-              style: TextStyle(color: Colors.white),
-            ),
-            backgroundColor: Colors.green, // Set success background color
-          ),
-        );
+        // Update display name
+        await user.updateDisplayName(_usernameController.text.trim());
+
+        // Update email
+        await user.updateEmail(_emailController.text.trim());
+
+        // Update Firestore document
+        await FirebaseFirestore.instance.collection('users').doc(user.uid).update({
+          'username': _usernameController.text.trim(),
+          'email': _emailController.text.trim(),
+        });
+
+        Navigator.pop(context, 'Profile updated successfully!');
       } catch (e) {
-        // Error updating profile
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              'Failed to update profile. $e',
-              style: TextStyle(color: Colors.white),
-            ),
-            backgroundColor: Colors.red, // Set error background color
-          ),
-        );
+        print('Failed to update profile: $e');
+        if (e is FirebaseAuthException && e.code == 'requires-recent-login') {
+          // Prompt the user to reauthenticate
+          // For example, you can navigate to the login screen to allow the user to sign in again
+          Navigator.pushReplacementNamed(context, '/login');
+        } else {
+          // Handle other errors gracefully
+          // Display a snackbar or dialog to inform the user
+        }
       }
     }
   }
@@ -41,61 +64,50 @@ class EditProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Edit Profile',
-          style: TextStyle(color: Colors.deepPurple),
-        ),
-        backgroundColor: Colors.white,
-        elevation: 0,
-        iconTheme: IconThemeData(color: Colors.deepPurple),
+        title: const Text('Edit Profile'),
+        backgroundColor: Colors.deepPurple, // Set app bar color
       ),
+      backgroundColor: Colors.grey[200], // Set background color
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextField(
+            Text(
+              'Edit Profile',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.deepPurple, // Set title color
+              ),
+            ),
+            const SizedBox(height: 24),
+            TextFormField(
+              controller: _usernameController,
               decoration: InputDecoration(
-                labelText: 'Full Name',
-                labelStyle: TextStyle(color: Colors.deepPurple),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.deepPurple),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey),
+                labelText: 'Username',
+                border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              // You can use TextEditingController to get the value of the text field
             ),
-            SizedBox(height: 20),
-            TextField(
+            const SizedBox(height: 16),
+            TextFormField(
+              controller: _emailController,
               decoration: InputDecoration(
                 labelText: 'Email',
-                labelStyle: TextStyle(color: Colors.deepPurple),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.deepPurple),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey),
+                border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              // You can use TextEditingController to get the value of the text field
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 24),
             ElevatedButton(
-              onPressed: () => _updateProfile(context),
-              child: Text(
-                'Update Profile',
-                style: TextStyle(fontSize: 18,color: Colors.black),
-              ),
+              onPressed: _updateProfile,
+              child: const Text('Update Profile'),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.deepPurple,
-                padding: EdgeInsets.symmetric(vertical: 16),
+                foregroundColor: Colors.white, backgroundColor: Colors.deepPurple, // Set text color
+                padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),

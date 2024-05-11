@@ -3,20 +3,40 @@ import 'package:firstproject/pages/ChangePasswordPage.dart';
 import 'package:firstproject/pages/EditProfilePage.dart';
 
 class ManageProfile extends StatelessWidget {
-  const ManageProfile({Key? key}) : super(key: key);
+  const ManageProfile({Key? key});
 
-  void _editProfile(BuildContext context) {
-    Navigator.push(
+  void _editProfile(BuildContext context) async {
+    final result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => EditProfilePage()),
+      MaterialPageRoute(builder: (context) => const EditProfilePage()),
     );
+
+    if (result != null && result is String) {
+      // Show a snackbar message to indicate profile update
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(result),
+          duration: const Duration(seconds: 2),
+        ),
+      );
+    }
   }
 
-  void _changePassword(BuildContext context) {
-    Navigator.push(
+  void _changePassword(BuildContext context) async {
+    final result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ChangePasswordPage()),
+      MaterialPageRoute(builder: (context) => const ChangePasswordPage()),
     );
+
+    if (result != null && result is String) {
+      // Show a snackbar message to indicate password change
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(result),
+          duration: const Duration(seconds: 2),
+        ),
+      );
+    }
   }
 
   @override
@@ -24,7 +44,7 @@ class ManageProfile extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Manage Profile',
           style: TextStyle(
             fontWeight: FontWeight.bold,
@@ -40,11 +60,11 @@ class ManageProfile extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
                     color: Colors.black12,
                     blurRadius: 10,
@@ -52,14 +72,14 @@ class ManageProfile extends StatelessWidget {
                   ),
                 ],
               ),
-              child: Icon(
+              child: const Icon(
                 Icons.account_circle,
                 size: 100,
                 color: Colors.deepPurple,
               ),
             ),
-            SizedBox(height: 40),
-            Text(
+            const SizedBox(height: 40),
+            const Text(
               'Manage Your Profile Here',
               style: TextStyle(
                 fontSize: 28,
@@ -67,34 +87,34 @@ class ManageProfile extends StatelessWidget {
                 color: Colors.deepPurple,
               ),
             ),
-            SizedBox(height: 60),
+            const SizedBox(height: 60),
             ElevatedButton(
               onPressed: () => _editProfile(context),
-              child: Text(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.deepPurple,
+                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
+              child: const Text(
                 'Edit Profile',
                 style: TextStyle(fontSize: 20,color: Colors.black),
               ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.deepPurple,
-                padding: EdgeInsets.symmetric(horizontal: 50, vertical: 16),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-              ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () => _changePassword(context),
-              child: Text(
-                'Change Password',
-                style: TextStyle(fontSize: 20,color: Colors.black),
-              ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.deepPurple,
-                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
+              ),
+              child: const Text(
+                'Change Password',
+                style: TextStyle(fontSize: 20,color: Colors.black),
               ),
             ),
             // Add more buttons for other profile management actions

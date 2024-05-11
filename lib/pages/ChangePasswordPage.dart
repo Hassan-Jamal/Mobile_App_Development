@@ -1,35 +1,47 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class ChangePasswordPage extends StatelessWidget {
+class ChangePasswordPage extends StatefulWidget {
   const ChangePasswordPage({Key? key}) : super(key: key);
 
-  Future<void> _changePassword(BuildContext context) async {
+  @override
+  _ChangePasswordPageState createState() => _ChangePasswordPageState();
+}
+
+class _ChangePasswordPageState extends State<ChangePasswordPage> {
+  final TextEditingController _currentPasswordController = TextEditingController();
+  final TextEditingController _newPasswordController = TextEditingController();
+
+  Future<void> _changePassword() async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       try {
-        await user.updatePassword('newPassword'); // Replace 'newPassword' with the new password entered in the text field
-        // Password changed successfully
+        // Reauthenticate user with current password
+        AuthCredential credential = EmailAuthProvider.credential(
+          email: user.email!,
+          password: _currentPasswordController.text.trim(),
+        );
+        await user.reauthenticateWithCredential(credential);
+
+        // Update password
+        await user.updatePassword(_newPasswordController.text.trim());
+
+        // Show snackbar message
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              'Password changed successfully.',
+              'Password changed successfully!',
               style: TextStyle(color: Colors.white),
             ),
-            backgroundColor: Colors.green, // Set success background color
+            backgroundColor: Colors.green,
           ),
         );
+
+        // Navigate back to profile page
+        Navigator.pop(context);
       } catch (e) {
-        // Error changing password
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              'Failed to change password. $e',
-              style: TextStyle(color: Colors.white),
-            ),
-            backgroundColor: Colors.red, // Set error background color
-          ),
-        );
+        print('Failed to change password: $e');
+        // Handle error
       }
     }
   }
@@ -38,66 +50,57 @@ class ChangePasswordPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Change Password',
-          style: TextStyle(color: Colors.deepPurple),
-        ),
-        backgroundColor: Colors.white,
-        elevation: 0,
-        iconTheme: IconThemeData(color: Colors.deepPurple),
+        title: const Text('Change Password'),
+        backgroundColor: Colors.deepPurple,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextField(
+            Text(
+              'Change Password',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.deepPurple,
+              ),
+            ),
+            const SizedBox(height: 24),
+            TextFormField(
+              controller: _currentPasswordController,
+              obscureText: true,
               decoration: InputDecoration(
                 labelText: 'Current Password',
-                labelStyle: TextStyle(color: Colors.deepPurple),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.deepPurple),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey),
+                border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              obscureText: true,
-              // You can use TextEditingController to get the value of the text field
             ),
-            SizedBox(height: 20),
-            TextField(
+            const SizedBox(height: 16),
+            TextFormField(
+              controller: _newPasswordController,
+              obscureText: true,
               decoration: InputDecoration(
                 labelText: 'New Password',
-                labelStyle: TextStyle(color: Colors.deepPurple),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.deepPurple),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey),
+                border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              obscureText: true,
-              // You can use TextEditingController to get the value of the text field
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 24),
             ElevatedButton(
-              onPressed: () => _changePassword(context),
-              child: Text(
-                'Change Password',
-                style: TextStyle(fontSize: 18,color: Colors.black),
-              ),
+              onPressed: _changePassword,
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.deepPurple,
+                foregroundColor: Colors.white, backgroundColor: Colors.deepPurple,
                 padding: EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
+              ),
+              child: const Text(
+                'Change Password',
+                style: TextStyle(fontSize: 16),
               ),
             ),
           ],

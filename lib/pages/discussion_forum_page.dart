@@ -1,39 +1,41 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:firstproject/utilis/routes.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DiscussionForumPage extends StatefulWidget {
+  const DiscussionForumPage({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _DiscussionForumPageState createState() => _DiscussionForumPageState();
 }
 
 class _DiscussionForumPageState extends State<DiscussionForumPage> {
-  TextEditingController _searchController = TextEditingController();
   bool _showNotifications = false;
   bool _filterOption1 = false;
   bool _filterOption2 = false;
 
+  // ignore: unused_element
   void _toggleFilterOption1() {
     setState(() {
       _filterOption1 = !_filterOption1;
     });
   }
 
-  void _toggleFilterOption2() {
-    setState(() {
-      _filterOption2 = !_filterOption2;
-    });
-  }
 
   void _applyFilters() {
     // Implement logic to apply the selected filter options
-    print('Filter alphabetic order: $_filterOption1');
-    print('Filter numbering order : $_filterOption2');
+    if (kDebugMode) {
+      print('Filter alphabetic order: $_filterOption1');
+    }
+    if (kDebugMode) {
+      print('Filter numbering order : $_filterOption2');
+    }
     // You can use the values of _filterOption1 and _filterOption2 to filter discussions
   }
 
   Future<void> _sendMessage(BuildContext context) async {
-    final Uri _emailLaunchUri = Uri(
+    final Uri emailLaunchUri = Uri(
       scheme: 'mailto',
       path: 'addawarga@gmail.com',
       queryParameters: {
@@ -41,8 +43,10 @@ class _DiscussionForumPageState extends State<DiscussionForumPage> {
         'body': 'Enter your message here...',
       },
     );
-    final String url = _emailLaunchUri.toString();
+    final String url = emailLaunchUri.toString();
+    // ignore: deprecated_member_use
     if (await canLaunch(url)) {
+      // ignore: deprecated_member_use
       await launch(url);
     } else {
       throw 'Could not launch $url';
@@ -54,16 +58,16 @@ class _DiscussionForumPageState extends State<DiscussionForumPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Filter Discussions'),
+          title: const Text('Filter Discussions'),
           content: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('Select filter options:',
+                const Text('Select filter options:',
                     style: TextStyle(fontWeight: FontWeight.bold)),
                 CheckboxListTile(
-                  title: Text('Filter option 1'),
+                  title: const Text('Filter option 1'),
                   value: _filterOption1,
                   onChanged: (bool? value) {
                     setState(() {
@@ -72,7 +76,7 @@ class _DiscussionForumPageState extends State<DiscussionForumPage> {
                   },
                 ),
                 CheckboxListTile(
-                  title: Text('Filter option 2'),
+                  title: const Text('Filter option 2'),
                   value: _filterOption2,
                   onChanged: (bool? value) {
                     setState(() {
@@ -88,14 +92,14 @@ class _DiscussionForumPageState extends State<DiscussionForumPage> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
                 _applyFilters();
                 Navigator.of(context).pop();
               },
-              child: Text('Apply'),
+              child: const Text('Apply'),
             ),
           ],
         );
@@ -126,7 +130,7 @@ class _DiscussionForumPageState extends State<DiscussionForumPage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => NewDiscussionPage(),
+        builder: (context) => const NewDiscussionPage(),
       ),
     );
   }
@@ -142,14 +146,14 @@ class _DiscussionForumPageState extends State<DiscussionForumPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Discussion Forum",
           style:
               TextStyle(fontFamily: 'Montserrat', fontWeight: FontWeight.bold),
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
             onPressed: () {
               showSearch(
                 context: context,
@@ -160,13 +164,13 @@ class _DiscussionForumPageState extends State<DiscussionForumPage> {
             },
           ),
           IconButton(
-            icon: Icon(Icons.filter_alt),
+            icon: const Icon(Icons.filter_alt),
             onPressed: () => _filterDiscussion(context),
           ),
           IconButton(
             icon: _showNotifications
-                ? Icon(Icons.notifications_active)
-                : Icon(Icons.notifications),
+                ? const Icon(Icons.notifications_active)
+                : const Icon(Icons.notifications),
             onPressed: () => _toggleNotifications(context),
           ),
         ],
@@ -181,37 +185,37 @@ class _DiscussionForumPageState extends State<DiscussionForumPage> {
               width: 200,
               height: 200,
             ),
-            SizedBox(height: 20),
-            Text(
+            const SizedBox(height: 20),
+            const Text(
               "Welcome to the Discussion Forum",
               style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'Roboto'),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () => _startNewDiscussion(context),
-              child: Text("Start New Discussion"),
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.white,
                 backgroundColor: Colors.blue,
-                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30)),
               ),
+              child: const Text("Start New Discussion"),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () => _sendMessage(context),
-              child: Text("Send Message"),
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.white,
                 backgroundColor: Colors.orange,
-                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30)),
               ),
+              child: const Text("Send Message"),
             ),
           ],
         ),
@@ -221,29 +225,31 @@ class _DiscussionForumPageState extends State<DiscussionForumPage> {
 }
 
 class NewDiscussionPage extends StatelessWidget {
+  const NewDiscussionPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "New Discussion",
           style:
               TextStyle(fontFamily: 'Montserrat', fontWeight: FontWeight.bold),
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               "Title:",
               style: TextStyle(
                   fontSize: 16.0,
                   fontWeight: FontWeight.bold,
                   color: Colors.black87),
             ),
-            SizedBox(height: 8.0),
+            const SizedBox(height: 8.0),
             TextFormField(
               decoration: InputDecoration(
                 hintText: "Enter discussion title",
@@ -254,18 +260,18 @@ class NewDiscussionPage extends StatelessWidget {
                   borderSide: BorderSide.none,
                 ),
                 contentPadding:
-                    EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
               ),
             ),
-            SizedBox(height: 16.0),
-            Text(
+            const SizedBox(height: 16.0),
+            const Text(
               "Content:",
               style: TextStyle(
                   fontSize: 16.0,
                   fontWeight: FontWeight.bold,
                   color: Colors.black87),
             ),
-            SizedBox(height: 8.0),
+            const SizedBox(height: 8.0),
             Expanded(
               child: TextFormField(
                 maxLines: null,
@@ -279,26 +285,26 @@ class NewDiscussionPage extends StatelessWidget {
                     borderSide: BorderSide.none,
                   ),
                   contentPadding:
-                      EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                      const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
                 ),
               ),
             ),
-            SizedBox(height: 16.0),
-            Container(
+            const SizedBox(height: 16.0),
+            SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
                   // Add functionality to submit the new discussion
                 },
-                child: Text("Submit"),
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,
                   backgroundColor: Colors.blue,
-                  padding: EdgeInsets.symmetric(vertical: 16.0),
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                 ),
+                child: const Text("Submit"),
               ),
             ),
           ],
@@ -317,7 +323,7 @@ class SearchBarDelegate extends SearchDelegate<String?> {
   List<Widget> buildActions(BuildContext context) {
     return [
       IconButton(
-        icon: Icon(Icons.clear),
+        icon: const Icon(Icons.clear),
         onPressed: () {
           query = '';
         },
@@ -328,7 +334,7 @@ class SearchBarDelegate extends SearchDelegate<String?> {
   @override
   Widget buildLeading(BuildContext context) {
     return IconButton(
-      icon: Icon(Icons.arrow_back),
+      icon: const Icon(Icons.arrow_back),
       onPressed: () {
         close(context, null);
       },

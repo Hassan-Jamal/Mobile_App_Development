@@ -1,10 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firstproject/auth.dart';
 import 'package:firstproject/pages/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:firstproject/utilis/routes.dart';
 
+final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
 class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key});
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -17,17 +20,35 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _controllerEmail = TextEditingController();
   final TextEditingController _controllerPassword = TextEditingController();
 
-  Future<void> signInWithEmailAndPassword() async {
+  Future<void> signIn() async {
+    print('Auth user: ${_controllerEmail.text}');
+    print('Auth email ${_controllerPassword.text}');
     try {
-      await Auth().signInWithEmailAndPassword(
+      var cred = await _firebaseAuth.signInWithEmailAndPassword(
         email: _controllerEmail.text,
         password: _controllerPassword.text,
       );
-      // Navigate to the home page after successful login
-      Navigator.pushReplacementNamed(context, '/home');
+
+      print('Auth cred $cred');
+      if (cred.user != null) {
+        //MOBILE USE KYN NHI KRTA APP KI TESTING K LIYE
+        Navigator.pushReplacementNamed(context, '/home');
+      } else {
+        // Authentication failed, display an error message
+        setState(() {
+          errorMessage = "Authentication failed";
+        });
+      }
     } on FirebaseAuthException catch (e) {
+      print('auth exception $e');
       setState(() {
         errorMessage = e.message;
+      });
+    } catch (e) {
+      print('auth exception error $e');
+      // Handle other exceptions (if any)
+      setState(() {
+        errorMessage = "An unexpected error occurred";
       });
     }
   }
@@ -40,32 +61,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _title() {
-    return const Text('Firebase Auth');
-  }
-
-  Widget _entryField(
-    String title,
-    TextEditingController controller,
-  ) {
-    return TextField(
-      controller: controller,
-      decoration: InputDecoration(
-        labelText: title,
-      ),
-    );
-  }
-
-  Widget _errorMessage() {
-    return Text(errorMessage == '' ? '' : 'Try Again ! $errorMessage');
-  }
-
-  Widget _submitButton() {
-    return ElevatedButton(
-      onPressed: signInWithEmailAndPassword,
-      child: const Text('Login'),
-    );
-  }
   final _formKey = GlobalKey<FormState>();
 
   moveToHome(BuildContext context) async {
@@ -74,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
         changeButton = true;
       });
       await Future.delayed(Duration(seconds: 1));
-      await Navigator.pushNamed(context, MyRoutes.homeRoute);
+      await signIn();
       setState(() {
         changeButton = false;
       });
@@ -83,20 +78,21 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.white,
-      child: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        // Wrap the Column with SingleChildScrollView
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 32.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              SizedBox(height: MediaQuery.of(context).size.height * 0.1),
               Image.asset(
                 "assets/images/login_image.png",
                 fit: BoxFit.cover,
               ),
-              SizedBox(
-                height: 20.0,
-              ),
+              SizedBox(height: 20.0),
               Text(
                 "Welcome, $name",
                 style: TextStyle(
@@ -104,35 +100,33 @@ class _LoginPageState extends State<LoginPage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(
-                height: 20.0,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 16.0,
-                  horizontal: 32.0,
-                ),
+              SizedBox(height: 20.0),
+              Form(
+                key: _formKey,
                 child: Column(
                   children: [
                     TextFormField(
+                      controller: _controllerEmail, // Add controller for email
                       decoration: InputDecoration(
-                        hintText: "Enter username",
-                        labelText: "Username",
+                        hintText: "Enter email",
+                        labelText: "Email",
                       ),
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "Please Enter Username:)";
+                          return "Please Enter Email:)";
+                        } else if (!value.contains('@')) {
+                          return "Please Enter a valid Email Address:)";
                         } else {
                           return null;
                         }
                       },
-                      onChanged: (value) {
-                        name = value;
-                        setState(() {});
-                      },
                     ),
+                    SizedBox(height: 20.0),
                     TextFormField(
-                      obscureText: _obscureText, // Use _obscureText to toggle visibility
+                      controller:
+                          _controllerPassword, // Add controller for password
+                      obscureText:
+                          _obscureText, // Use _obscureText to toggle visibility
                       decoration: InputDecoration(
                         hintText: "Enter password",
                         labelText: "Password",
@@ -143,7 +137,9 @@ class _LoginPageState extends State<LoginPage> {
                             });
                           },
                           child: Icon(
-                            _obscureText ? Icons.visibility : Icons.visibility_off,
+                            _obscureText
+                                ? Icons.visibility
+                                : Icons.visibility_off,
                           ),
                         ),
                       ),
@@ -157,9 +153,7 @@ class _LoginPageState extends State<LoginPage> {
                         }
                       },
                     ),
-                    SizedBox(
-                      height: 40.0,
-                    ),
+                    SizedBox(height: 40.0),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -183,17 +177,18 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ],
                     ),
-                    SizedBox(
-                      height: 40.0,
-                    ),
+                    SizedBox(height: 40.0),
                     Material(
                       color: Colors.deepPurple,
-                      borderRadius: BorderRadius.circular(changeButton ? 50 : 8),
+                      borderRadius:
+                          BorderRadius.circular(changeButton ? 50 : 8),
                       child: InkWell(
                         onTap: () => moveToHome(context),
                         child: AnimatedContainer(
                           duration: Duration(seconds: 1),
-                          width: changeButton ? 50 : 150,
+                          width: changeButton
+                              ? 50
+                              : MediaQuery.of(context).size.width * 0.5,
                           height: 50,
                           alignment: Alignment.center,
                           child: changeButton
@@ -212,6 +207,8 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                     ),
+                    SizedBox(height: 20.0),
+                    _errorMessage(),
                   ],
                 ),
               ),
@@ -220,5 +217,9 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  Widget _errorMessage() {
+    return Text(errorMessage == '' ? '' : 'Try Again ! $errorMessage');
   }
 }
