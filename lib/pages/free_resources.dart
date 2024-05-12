@@ -1,398 +1,33 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 
-class FreeResourcesPage extends StatelessWidget {
-  final List<Course> courses = [
-    Course(
-      title: 'Introduction to Programming',
-      description: 'Learn the basics of programming.',
-      playlistUrl: 'https://www.youtube.com/watch?v=PFP8GnJcJHA',
-      imagePath: 'assets/images/card_pic.png',
-    ),
-    Course(
-      title: 'Web Development Fundamentals',
-      description: 'Explore the fundamentals of web development.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PL4cUxeGkcC9g9gP2onazU5-2M-AzA8eBw',
-      imagePath: 'assets/images/discuss_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Introduction to Python Programming',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'JavaScript Fundamentals',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with JavaScript Fundamentals.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
+class FreeResourcesPage extends StatefulWidget {
+  @override
+  _FreeResourcesPageState createState() => _FreeResourcesPageState();
+}
 
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
+class _FreeResourcesPageState extends State<FreeResourcesPage> {
+  late List<Course> courses = [];
 
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
-    Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),Course(
-      title: 'Machine Learning Essentials',
-      description: 'Get started with machine learning.',
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-      imagePath: 'assets/images/login_image.png',
-    ),
+  @override
+  void initState() {
+    super.initState();
+    fetchCourses();
+  }
 
-    // Add more initial courses here...
-  ];
+  Future<void> fetchCourses() async {
+    final response = await http.get(Uri.parse('https://www.skillshare.com/'));
+    if (response.statusCode == 200) {
+      final List<dynamic> data = json.decode(response.body);
+      setState(() {
+        courses = data.map((courseData) => Course.fromJson(courseData)).toList();
+      });
+    } else {
+      throw Exception('Failed to load courses');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -416,7 +51,7 @@ class FreeResourcesPage extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Image.asset(
+                    Image.network(
                       course.imagePath,
                       width: 100, // Adjust width as needed
                       height: 100, // Adjust height as needed
@@ -470,4 +105,13 @@ class Course {
     required this.playlistUrl,
     required this.imagePath,
   });
+
+  factory Course.fromJson(Map<String, dynamic> json) {
+    return Course(
+      title: json['title'],
+      description: json['description'],
+      playlistUrl: json['playlistUrl'],
+      imagePath: json['imagePath'],
+    );
+  }
 }

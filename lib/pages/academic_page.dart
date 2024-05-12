@@ -1,9 +1,7 @@
-// ignore: file_names
-// ignore: file_names
-// ignore: file_names
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Subject {
   final String name;
@@ -16,11 +14,11 @@ class Subject {
     required this.price,
   });
 }
+
 class AcademicPage extends StatefulWidget {
-  const AcademicPage({super.key});
+  const AcademicPage({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _AcademicPageState createState() => _AcademicPageState();
 }
 
@@ -39,7 +37,6 @@ class _AcademicPageState extends State<AcademicPage> {
   }
 
   void loadSubjects() async {
-    // Load course data from a JSON file
     String jsonData = await rootBundle.loadString('assets/files/courses.json');
     List<dynamic> courses = json.decode(jsonData);
 
@@ -89,13 +86,14 @@ class _AcademicPageState extends State<AcademicPage> {
                 }
                 return Card(
                   elevation: 4,
-                  margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                   child: ListTile(
                     contentPadding: const EdgeInsets.all(16),
                     title: Text(
                       subject.name,
-                      style:
-                          const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -147,25 +145,76 @@ class _AcademicPageState extends State<AcademicPage> {
             ),
           ),
           Padding(
-  padding: const EdgeInsets.all(8.0),
-  child: Align(
-    alignment: Alignment.bottomLeft,
-    child: Text(
-      'Total: \$${calculateTotalPrice().toStringAsFixed(2)}',
-      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-    ),
-  ),
-),
-
+            padding: const EdgeInsets.all(8.0),
+            child: Align(
+              alignment: Alignment.bottomLeft,
+              child: Text(
+                'Total: \$${calculateTotalPrice().toStringAsFixed(2)}',
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: 200.0, // Move the button upwards
+            right: 16.0, // Position the button to the extreme right
+            child: FloatingActionButton.extended(
+              onPressed: _showAddSubjectDialog,
+              label: const Text('Add Subject'),
+              icon: const Icon(Icons.add),
+              backgroundColor: Colors.deepPurple,
+            ),
+          ),
+          SizedBox(height: 14),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => PaymentPage(cart: cart)),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.deepPurple,
+              padding: EdgeInsets.symmetric(vertical: 16, horizontal: 32),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(50),
+              ),
+              elevation: 10,
+              shadowColor: Colors.deepPurpleAccent.withOpacity(0.5),
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Colors.deepPurpleAccent, Colors.purple],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+                borderRadius: BorderRadius.circular(50),
+              ),
+              padding: EdgeInsets.all(10),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.shopping_cart,
+                    color: Colors.white,
+                  ),
+                  SizedBox(width: 10),
+                  Text(
+                    'Go to Checkout',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      letterSpacing: 1.2,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          _showAddSubjectDialog();
-        },
-        label: const Text('Add Subject'),
-        icon: const Icon(Icons.add),
-        backgroundColor: Colors.deepPurple,
       ),
     );
   }
@@ -175,7 +224,7 @@ class _AcademicPageState extends State<AcademicPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Add Demanded Subject'),
+          title: const Text('Add Subject'),
           content: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -239,4 +288,128 @@ class _AcademicPageState extends State<AcademicPage> {
   double calculateTotalPrice() {
     return cart.fold(0, (total, item) => total + item.price);
   }
+}
+
+class PaymentPage extends StatelessWidget {
+  final List<Subject> cart;
+
+  const PaymentPage({Key? key, required this.cart}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Payment Page'),
+      ),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _buildPaymentMethodButton(
+                name: 'PayPal',
+                url: 'https://www.paypal.com/login',
+                icon: Icons.payment,
+                color: Colors.blue,
+              ),
+              _buildPaymentMethodButton(
+                name: 'Stripe',
+                url: 'https://dashboard.stripe.com/login',
+                icon: Icons.credit_card,
+                color: Colors.green,
+              ),
+              _buildPaymentMethodButton(
+                name: 'Google Pay',
+                url: 'https://pay.google.com/',
+                icon: Icons.attach_money,
+                color: Colors.orange,
+              ),
+              _buildPaymentMethodButton(
+                name: 'Apple Pay',
+                url: 'https://www.apple.com/apple-pay/',
+                icon: Icons.phone_iphone,
+                color: Colors.grey,
+              ),
+              _buildPaymentMethodButton(
+                name: 'Amazon Pay',
+                url: 'https://pay.amazon.com/',
+                icon: Icons.shopping_cart,
+                color: Colors.yellow,
+              ),
+              _buildPaymentMethodButton(
+                name: 'Venmo',
+                url: 'https://venmo.com/account/sign-in',
+                icon: Icons.monetization_on,
+                color: Colors.blueAccent,
+              ),
+              _buildPaymentMethodButton(
+                name: 'Square',
+                url: 'https://squareup.com/login',
+                icon: Icons.square_foot,
+                color: Colors.purple,
+              ),
+              _buildPaymentMethodButton(
+                name: 'Zelle',
+                url: 'https://www.zellepay.com/',
+                icon: Icons.account_balance,
+                color: Colors.teal,
+              ),
+              _buildPaymentMethodButton(
+                name: 'Cash App',
+                url: 'https://cash.app/login',
+                icon: Icons.attach_money,
+                color: Colors.green,
+              ),
+              _buildPaymentMethodButton(
+                name: 'Payoneer',
+                url: 'https://myaccount.payoneer.com/Login/Login.aspx',
+                icon: Icons.account_circle,
+                color: Colors.blueGrey,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPaymentMethodButton({
+    required String name,
+    required String url,
+    required IconData icon,
+    required Color color,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      child: ElevatedButton.icon(
+        onPressed: () {
+          _launchPaymentMethodLoginPage(url);
+        },
+        icon: Icon(icon),
+        label: Text(name),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: color,
+          padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+          textStyle: TextStyle(fontSize: 20.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _launchPaymentMethodLoginPage(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+}
+
+void main() {
+  runApp(MaterialApp(
+    home: PaymentPage(cart: []),
+  ));
 }

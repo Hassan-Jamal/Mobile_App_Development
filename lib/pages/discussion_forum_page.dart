@@ -1,12 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DiscussionForumPage extends StatefulWidget {
-  const DiscussionForumPage({super.key});
+  const DiscussionForumPage({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _DiscussionForumPageState createState() => _DiscussionForumPageState();
 }
 
@@ -15,23 +16,44 @@ class _DiscussionForumPageState extends State<DiscussionForumPage> {
   bool _filterOption1 = false;
   bool _filterOption2 = false;
 
-  // ignore: unused_element
-  void _toggleFilterOption1() {
-    setState(() {
-      _filterOption1 = !_filterOption1;
-    });
-  }
-
+  // List to store messages
+  List<Message> _messages = [];
 
   void _applyFilters() {
-    // Implement logic to apply the selected filter options
-    if (kDebugMode) {
-      print('Filter alphabetic order: $_filterOption1');
+    // Reference to the Firestore collection
+    CollectionReference discussionsRef =
+        FirebaseFirestore.instance.collection('discussions');
+
+    // Clear any existing filters
+    Query discussionsQuery = discussionsRef;
+
+    // Apply filters based on selected options
+    if (_filterOption1 && !_filterOption2) {
+      // Apply filter option 1
+      // For example, filter discussions alphabetically
+      discussionsQuery = discussionsQuery.orderBy('title');
+    } else if (!_filterOption1 && _filterOption2) {
+      // Apply filter option 2
+      // For example, filter discussions by date
+      discussionsQuery = discussionsQuery.orderBy('timestamp');
+    } else if (_filterOption1 && _filterOption2) {
+      // Apply both filters
+      // For example, filter discussions alphabetically and by date
+      discussionsQuery =
+          discussionsQuery.orderBy('title').orderBy('timestamp');
     }
-    if (kDebugMode) {
-      print('Filter numbering order : $_filterOption2');
-    }
-    // You can use the values of _filterOption1 and _filterOption2 to filter discussions
+
+    // Execute the query
+    discussionsQuery.get().then((querySnapshot) {
+      // Process the results
+      querySnapshot.docs.forEach((doc) {
+        // Handle each discussion document
+        // For example, update UI to display discussions
+      });
+    }).catchError((error) {
+      // Handle any errors
+      print("Failed to fetch discussions: $error");
+    });
   }
 
   Future<void> _sendMessage(BuildContext context) async {
@@ -44,9 +66,7 @@ class _DiscussionForumPageState extends State<DiscussionForumPage> {
       },
     );
     final String url = emailLaunchUri.toString();
-    // ignore: deprecated_member_use
     if (await canLaunch(url)) {
-      // ignore: deprecated_member_use
       await launch(url);
     } else {
       throw 'Could not launch $url';
@@ -112,7 +132,6 @@ class _DiscussionForumPageState extends State<DiscussionForumPage> {
       _showNotifications = !_showNotifications;
     });
 
-    // Show a snackbar with the updated notification status
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(_showNotifications
@@ -125,21 +144,74 @@ class _DiscussionForumPageState extends State<DiscussionForumPage> {
     // Here, you can add the logic to enable/disable notifications or perform any other action related to notifications
   }
 
-  void _startNewDiscussion(BuildContext context) {
-    // Navigate to a new page where users can create a new discussion
-    Navigator.push(
+  void _startNewDiscussion(BuildContext context) async {
+    final result = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => const NewDiscussionPage(),
       ),
     );
+
+    if (result != null && result is Map<String, dynamic>) {
+      final title = result['title'];
+      final content = result['content'];
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        await FirebaseFirestore.instance.collection('discussions').add({
+          'title': title,
+          'content': content,
+          'creator': user.uid,
+          'timestamp': DateTime.now(),
+        });
+      }
+    }
+
+    // Fetch messages after adding the new discussion
+    _fetchMessages();
   }
 
+ void _fetchMessages() {
+  FirebaseFirestore.instance
+      .collection('discussions')
+      .orderBy('timestamp', descending: true)
+      .limit(20) // Limit the number of messages to fetch
+      .snapshots()
+      .listen((QuerySnapshot snapshot) {
+    // Clear existing messages list before updating with new messages
+    setState(() {
+      _messages.clear();
+    });
+
+    snapshot.docs.forEach((DocumentSnapshot doc) {
+      // Extract message data from document
+      final title = doc['title'];
+      final content = doc['content'];
+      final creator = doc['creator'];
+      
+      // Convert Firestore Timestamp to Dart DateTime
+      final timestamp = (doc['timestamp'] as Timestamp).toDate();
+
+      // Create a Message object from the data
+      final message = Message(
+        title: title,
+        content: content,
+        creator: creator,
+        timestamp: timestamp,
+      );
+
+      // Add the message to the list of messages
+      setState(() {
+        _messages.add(message);
+      });
+    });
+  });
+}
+
+
   void _performSearch(BuildContext context, String query) {
-    // Implement search functionality here
-    // For now, just show a snackbar
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text("Searching for: $query")));
+    // You can perform Firestore queries to search for discussions here
   }
 
   @override
@@ -148,8 +220,8 @@ class _DiscussionForumPageState extends State<DiscussionForumPage> {
       appBar: AppBar(
         title: const Text(
           "Discussion Forum",
-          style:
-              TextStyle(fontFamily: 'Montserrat', fontWeight: FontWeight.bold),
+          style: TextStyle(
+              fontFamily: 'Montserrat', fontWeight: FontWeight.bold),
         ),
         actions: [
           IconButton(
@@ -158,7 +230,8 @@ class _DiscussionForumPageState extends State<DiscussionForumPage> {
               showSearch(
                 context: context,
                 delegate: SearchBarDelegate(
-                  onSearch: (query) => _performSearch(context, query),
+                  onSearch: (query) =>
+                      _performSearch(context, query),
                 ),
               );
             },
@@ -199,7 +272,8 @@ class _DiscussionForumPageState extends State<DiscussionForumPage> {
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.white,
                 backgroundColor: Colors.blue,
-                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 40, vertical: 16),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30)),
               ),
@@ -211,7 +285,8 @@ class _DiscussionForumPageState extends State<DiscussionForumPage> {
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.white,
                 backgroundColor: Colors.orange,
-                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 40, vertical: 16),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30)),
               ),
@@ -224,8 +299,23 @@ class _DiscussionForumPageState extends State<DiscussionForumPage> {
   }
 }
 
+// Define a class to represent individual messages
+class Message {
+  final String title;
+  final String content;
+  final String creator;
+  final DateTime timestamp;
+
+  Message({
+    required this.title,
+    required this.content,
+    required this.creator,
+    required this.timestamp,
+  });
+}
+
 class NewDiscussionPage extends StatelessWidget {
-  const NewDiscussionPage({super.key});
+  const NewDiscussionPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -233,8 +323,8 @@ class NewDiscussionPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           "New Discussion",
-          style:
-              TextStyle(fontFamily: 'Montserrat', fontWeight: FontWeight.bold),
+          style: TextStyle(
+              fontFamily: 'Montserrat', fontWeight: FontWeight.bold),
         ),
       ),
       body: Padding(
@@ -294,15 +384,17 @@ class NewDiscussionPage extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  // Add functionality to submit the new discussion
+                  Navigator.pop(context, {
+                    'title': 'Discussion Title', // Replace with actual title
+                    'content': 'Discussion Content', // Replace with actual content
+                  });
                 },
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,
                   backgroundColor: Colors.blue,
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
+                      borderRadius: BorderRadius.circular(10.0)),
                 ),
                 child: const Text("Submit"),
               ),
