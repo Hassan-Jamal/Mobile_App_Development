@@ -1,0 +1,591 @@
+[
+    {
+      "title": "Introduction to Python Programming",
+      "description": "Learn the basics of Python programming language and start building your own projects.",
+      "playlistUrl": "https://www.udemy.com/course/free-python/",
+      "imagePath": "assets/images/python.jpg"
+    },
+    {
+        "title": "Introduction to Software Engineering",
+        "description": "Learn the fundamentals of software engineering, including software development processes, methodologies, and best practices.",
+        "playlistUrl": "https://www.coursera.org/learn/introduction-to-software-engineering",
+        "imagePath": "assets/images/software_engineering.jpg"
+      },
+      {
+        "title": "Agile Development",
+        "description": "Master Agile development methodologies, including Scrum, Kanban, and Extreme Programming (XP), to deliver high-quality software products efficiently.",
+        "playlistUrl": "https://www.udemy.com/course/agile-scrum-kanban/",
+        "imagePath": "assets/images/agile_development.png"
+      },
+      {
+        "title": "Software Architecture and Design",
+        "description": "Explore software architecture and design principles, patterns, and techniques to build scalable and maintainable software systems.",
+        "playlistUrl": "https://www.udacity.com/course/software-architecture-design--ud821",
+        "imagePath": "assets/images/software_architecture.png"
+      },
+      {
+        "title": "Continuous Integration and Continuous Delivery (CI/CD)",
+        "description": "Learn CI/CD pipelines, automated testing, and deployment strategies to streamline the software development lifecycle and deliver code changes quickly and reliably.",
+        "playlistUrl": "https://www.pluralsight.com/courses/continuous-integration-continuous-delivery-big-picture",
+        "imagePath": "assets/images/ci_cd.jpg"
+      },
+      {
+        "title": "Software Quality Assurance",
+        "description": "Understand software quality assurance techniques, including testing methodologies, test automation, and quality metrics, to ensure software reliability and performance.",
+        "playlistUrl": "https://www.udemy.com/course/software-quality-assurance-fundamentals/",
+        "imagePath": "assets/images/quality_assurance.jpg"
+      },
+      {
+        "title": "DevOps Fundamentals",
+        "description": "Explore DevOps principles and practices, including infrastructure as code (IaC), containerization, and orchestration tools, to improve collaboration between development and operations teams.",
+        "playlistUrl": "https://www.coursera.org/learn/devops-fundamentals",
+        "imagePath": "assets/images/devops.jpg"
+      },
+    {
+      "title": "Web Development Bootcamp",
+      "description": "Master the fundamentals of web development including HTML, CSS, and JavaScript.",
+      "playlistUrl": "https://www.udemy.com/course/the-web-developer-bootcamp/",
+      "imagePath": "assets/images/web_development.jpg"
+    },
+    {
+      "title": "Machine Learning A-Z™: Hands-On Python & R In Data Science",
+      "description": "Learn how to create Machine Learning algorithms in Python and R from two Data Science experts.",
+      "playlistUrl": "https://www.udemy.com/course/machinelearning/",
+      "imagePath": "assets/images/machine_learning.jpg"
+    },
+    {
+      "title": "The Complete JavaScript Course 2022: From Zero to Expert!",
+      "description": "Master JavaScript with the most complete JavaScript course on the market! Includes projects, challenges, and quizzes.",
+      "playlistUrl": "https://www.udemy.com/course/the-complete-javascript-course/",
+      "imagePath": "assets/images/javascript.png"
+    },
+    {
+      "title": "Data Science and Machine Learning Bootcamp with R",
+      "description": "Learn the essentials of Data Science and Machine Learning using R programming language.",
+      "playlistUrl": "https://www.udemy.com/course/data-science-and-machine-learning-bootcamp-with-r/",
+      "imagePath": "assets/images/r.jpg"
+    },
+    {
+      "title": "iOS App Development for Beginners",
+      "description": "Start your journey to become an iOS developer with this beginner-friendly course.",
+      "playlistUrl": "https://www.udemy.com/course/ios-app-development-for-beginners/",
+      "imagePath": "assets/images/ios.png"
+    },
+    {
+      "title": "The Complete Web Developer in 2022: Zero to Mastery",
+      "description": "Learn to code and become a web developer with HTML, CSS, JavaScript, React, Node.js, and more!",
+      "playlistUrl": "https://www.udemy.com/course/the-complete-web-developer-zero-to-mastery/",
+      "imagePath": "assets/images/zero_to_mastery.jpg"
+    },
+    {
+      "title": "Android App Development Masterclass using Kotlin",
+      "description": "Become an Android developer and build amazing apps using Kotlin programming language.",
+      "playlistUrl": "https://www.udemy.com/course/android-app-development-masterclass-using-kotlin/",
+      "imagePath": "assets/images/android.jpg"
+    },
+    {
+      "title": "Complete Digital Marketing Course 2022: 12 Courses in 1",
+      "description": "Master Digital Marketing with this comprehensive course covering SEO, Social Media Marketing, Email Marketing, and more.",
+      "playlistUrl": "https://www.udemy.com/course/learn-digital-marketing-course/",
+      "imagePath": "assets/images/digital_marketing.jpg"
+    },
+    {
+      "title": "React - The Complete Guide (incl Hooks, React Router, Redux)",
+      "description": "Learn React and build powerful, fast, user-friendly web applications.",
+      "playlistUrl": "https://www.udemy.com/course/react-the-complete-guide-incl-redux/",
+      "imagePath": "assets/images/react.png"
+    },
+    {
+      "title": "Advanced SQL for Data Scientists and Data Analysts",
+      "description": "Master SQL and advance your career as a Data Scientist or Data Analyst.",
+      "playlistUrl": "https://www.udemy.com/course/advanced-sql-for-data-scientists-and-data-analysts/",
+      "imagePath": "assets/images/sql.jpg"
+    },
+    {
+      "title": "The Ultimate Drawing Course - Beginner to Advanced",
+      "description": "Learn to draw like a pro with this comprehensive drawing course.",
+      "playlistUrl": "https://www.udemy.com/course/the-ultimate-drawing-course-beginner-to-advanced/",
+      "imagePath": "assets/images/drawing.jpg"
+    },
+    {
+      "title": "Complete Blender Creator: Learn 3D Modelling for Beginners",
+      "description": "Master the art of 3D modelling with Blender.",
+      "playlistUrl": "https://www.udemy.com/course/blendertutorial/",
+      "imagePath": "assets/images/blender.jpg"
+    },
+    {
+      "title": "Photography Masterclass: A Complete Guide to Photography",
+      "description": "Learn photography from scratch and become a professional photographer.",
+      "playlistUrl": "https://www.udemy.com/course/photography-masterclass-complete-guide-to-photography/",
+      "imagePath": "assets/images/photography.jpg"
+    },
+    {
+      "title": "C++ Programming - From Beginner to Advanced",
+      "description": "Become a proficient C++ programmer from scratch.",
+      "playlistUrl": "https://www.udemy.com/course/free-learn-c-tutorial-beginners/",
+      "imagePath": "assets/images/cpp.jpg"
+    },
+    {
+      "title": "Ultimate Photoshop Training: From Beginner to Pro",
+      "description": "Master Photoshop and unleash your creativity with professional-grade photo editing skills.",
+      "playlistUrl": "https://www.udemy.com/course/photoshop-cs6-cc-professional-course/",
+      "imagePath": "assets/images/photoshop.jpg"
+    },
+    {
+      "title": "Complete Music Production Course: Produce Music Like a Pro",
+      "description": "Learn music production from start to finish and create your own music.",
+      "playlistUrl": "https://www.udemy.com/course/music-production-course/",
+      "imagePath": "assets/images/music_production.jpg"
+    },
+    {
+      "title": "Artificial Intelligence: Reinforcement Learning in Python",
+      "description": "Master Reinforcement Learning techniques and build your own AI applications.",
+      "playlistUrl": "https://www.udemy.com/course/artificial-intelligence-reinforcement-learning-in-python/",
+      "imagePath": "assets/images/ai.jpg"
+    },
+    {
+      "title": "Complete Ethical Hacking Course: Beginner to Advanced",
+      "description": "Become an Ethical Hacker and protect systems from cyber attacks.",
+      "playlistUrl": "https://www.udemy.com/course/learn-ethical-hacking-from-scratch/",
+      "imagePath": "assets/images/ethical_hacking.jpg"
+    },
+    {
+      "title": "Financial Analyst Training & Investing Course",
+      "description": "Learn the essentials of financial analysis and investment strategies.",
+      "playlistUrl": "https://www.udemy.com/course/financial-analyst-training/",
+      "imagePath": "assets/images/finance.jpg"
+    },
+    {
+      "title": "Complete Digital Art Tools Course: Beginner to Advanced",
+      "description": "Master digital art tools and techniques and create stunning digital artworks.",
+      "playlistUrl": "https://www.udemy.com/course/digital-art-tools/",
+      "imagePath": "assets/images/digital_art.jpg"
+    },
+    {
+      "title": "Complete Spanish Course: Learn Spanish for Beginners",
+      "description": "Master Spanish language from scratch and become fluent in speaking, reading, and writing.",
+      "playlistUrl": "https://www.udemy.com/course/spanish-course-for-beginners-learn-spanish-online/",
+      "imagePath": "assets/images/spanish.jpg"
+    },
+    {
+      "title": "Angular - The Complete Guide (2022 Edition)",
+      "description": "Learn Angular and build powerful, modern web applications.",
+      "playlistUrl": "https://www.udemy.com/course/the-complete-guide-to-angular-2/",
+      "imagePath": "assets/images/angular.png"
+    },
+    {
+      "title": "Complete Graphic Design Course: Learn to Design like a Pro",
+      "description": "Master graphic design principles and create stunning designs.",
+      "playlistUrl": "https://www.udemy.com/course/graphic-design-for-beginners/",
+      "imagePath": "assets/images/graphic_design.jpg"
+    },
+    {
+      "title": "Complete Meditation Course: Relaxation and Stress Reduction",
+      "description": "Learn meditation techniques and reduce stress for a healthier and happier life.",
+      "playlistUrl": "https://www.udemy.com/course/meditation-course-relaxation-stress-reduction/",
+      "imagePath": "assets/images/meditation.png"
+    },
+    {
+      "title": "Complete AutoCAD 2022 Course: Learn AutoCAD from Scratch",
+      "description": "Master AutoCAD and become proficient in 2D and 3D design.",
+      "playlistUrl": "https://www.udemy.com/course/autocad-2022-complete-course-for-beginners/",
+      "imagePath": "assets/images/autocad.png"
+    },
+    {
+      "title": "Complete Photography Masterclass: Beginner to Advanced",
+      "description": "Master photography skills and take breathtaking photos like a professional.",
+      "playlistUrl": "https://www.udemy.com/course/photography-masterclass-complete-guide-to-photography/",
+      "imagePath": "assets/images/photography_masterclass.jpg"
+    },
+    {
+      "title": "Complete Drawing and Sketching Course: Beginner to Advanced",
+      "description": "Master drawing and sketching techniques and create stunning artworks.",
+      "playlistUrl": "https://www.udemy.com/course/drawing-and-sketching-course/",
+      "imagePath": "assets/images/drawing_course.jpg"
+    },
+    {
+      "title": "Complete Music Theory Course: From Beginner to Advanced",
+      "description": "Master music theory and enhance your musical skills.",
+      "playlistUrl": "https://www.udemy.com/course/music-theory/",
+      "imagePath": "assets/images/music_theory.jpg"
+    },
+    {
+      "title": "Complete SEO Training: Beginner to Advanced",
+      "description": "Learn SEO from scratch and boost website traffic and search engine rankings.",
+      "playlistUrl": "https://www.udemy.com/course/complete-seo-training/",
+      "imagePath": "assets/images/seo.jpg"
+    },
+    {
+      "title": "Complete iOS App Development Course: Build 20 Apps",
+      "description": "Master iOS app development and build 20 real-world apps from scratch.",
+      "playlistUrl": "https://www.udemy.com/course/ios-13-app-development-bootcamp/",
+      "imagePath": "assets/images/ios_development.jpg"
+    },
+    {
+      "title": "Complete React Native Course: Build Mobile Apps",
+      "description": "Learn React Native and build cross-platform mobile apps for iOS and Android.",
+      "playlistUrl": "https://www.udemy.com/course/the-complete-react-native-and-redux-course/",
+      "imagePath": "assets/images/react_native.jpg"
+    },
+    {
+      "title": "Complete Data Science Course: Python, Pandas, & Machine Learning",
+      "description": "Master Data Science with Python, Pandas, and Machine Learning algorithms.",
+      "playlistUrl": "https://www.udemy.com/course/data-science-and-machine-learning-bootcamp-with-python/",
+      "imagePath": "assets/images/data_science.jpg"
+    },
+    {
+      "title": "Complete Java Developer Course: Beginner to Expert",
+      "description": "Learn Java programming language from scratch and become a professional Java developer.",
+      "playlistUrl": "https://www.udemy.com/course/java-the-complete-java-developer-course/",
+      "imagePath": "assets/images/java.jpg"
+    },
+    {
+      "title": "Complete Unity Game Development Course: Build 2D & 3D Games",
+      "description": "Learn Unity game development and build your own 2D and 3D games.",
+      "playlistUrl": "https://www.udemy.com/course/unitycourse/",
+      "imagePath": "assets/images/unity.jpg"
+    },
+    {
+      "title": "Complete Vue.js Course: Build Web Apps with Vue.js",
+      "description": "Learn Vue.js and build powerful web applications with this comprehensive course.",
+      "playlistUrl": "https://www.udemy.com/course/vuejs-2-the-complete-guide/",
+      "imagePath": "assets/images/vuejs.jpg"
+    },
+    {
+      "title": "Complete Adobe Illustrator Course: From Beginner to Expert",
+      "description": "Master Adobe Illustrator and create stunning vector graphics and illustrations.",
+      "playlistUrl": "https://www.udemy.com/course/adobe-illustrator-the-complete-guide/",
+      "imagePath": "assets/images/illustrator.png"
+    },
+    {
+      "title": "Complete Blockchain & Cryptocurrency Course: Beginner to Expert",
+      "description": "Learn Blockchain and Cryptocurrency from scratch and become a blockchain expert.",
+      "playlistUrl": "https://www.udemy.com/course/build-your-blockchain-az/",
+      "imagePath": "assets/images/blockchain.jpg"
+    },
+    {
+      "title": "Complete PHP Course: Beginner to Advanced",
+      "description": "Master PHP programming language and build dynamic web applications.",
+      "playlistUrl": "https://www.udemy.com/course/php-mysql-tutorial/",
+      "imagePath": "assets/images/php.jpg"
+    },
+    {
+      "title": "Complete Microsoft Excel Course: From Beginner to Advanced",
+      "description": "Master Microsoft Excel and become proficient in data analysis and visualization.",
+      "playlistUrl": "https://www.udemy.com/course/microsoft-excel-2013-from-beginner-to-advanced-and-beyond/",
+      "imagePath": "assets/images/excel.jpg"
+    },
+    {
+      "title": "Complete Kotlin Developer Course: Beginner to Advanced",
+      "description": "Learn Kotlin programming language and build Android apps like a pro.",
+      "playlistUrl": "https://www.udemy.com/course/kotlin-for-android-developers/",
+      "imagePath": "assets/images/kotlin.jpg"
+    },
+    {
+      "title": "Complete Adobe Photoshop Course: Beginner to Expert",
+      "description": "Master Adobe Photoshop and create stunning digital artworks and designs.",
+      "playlistUrl": "https://www.udemy.com/course/photoshop-beginners-mastery-zero-to-hero-in-photoshop/",
+      "imagePath": "assets/images/photoshop1.png"
+    },
+    {
+      "title": "Complete Bootstrap Course: Build Responsive Websites",
+      "description": "Learn Bootstrap and create responsive websites with ease.",
+      "playlistUrl": "https://www.udemy.com/course/bootstrap-4-tutorials/",
+      "imagePath": "assets/images/bootstrap.png"
+    },
+    {
+      "title": "Complete Artificial Intelligence Course: Beginner to Advanced",
+      "description": "Master Artificial Intelligence concepts and techniques and build AI applications.",
+      "playlistUrl": "https://www.udemy.com/course/complete-artificial-intelligence/",
+      "imagePath": "assets/images/ai1.jpg"
+    },
+    {
+      "title": "Complete TypeScript Course: From Beginner to Advanced",
+      "description": "Learn TypeScript and build scalable and maintainable web applications.",
+      "playlistUrl": "https://www.udemy.com/course/understanding-typescript/",
+      "imagePath": "assets/images/typescript.jpg"
+    },
+    {
+      "title": "Complete AWS Certified Solutions Architect Course",
+      "description": "Prepare for the AWS Certified Solutions Architect certification exam with this comprehensive course.",
+      "playlistUrl": "https://www.udemy.com/course/aws-certified-solutions-architect-associate/",
+      "imagePath": "assets/images/aws.jpg"
+    },
+    {
+      "title": "Complete Data Analysis Course: Python, Pandas, & Seaborn",
+      "description": "Master Data Analysis with Python, Pandas, and Seaborn libraries.",
+      "playlistUrl": "https://www.udemy.com/course/data-analysis-with-pandas-a-complete-tutorial/",
+      "imagePath": "assets/images/data_analysis.jpg"
+    },
+    {
+      "title": "Complete UI/UX Design Course: From Beginner to Expert",
+      "description": "Master UI/UX Design principles and create beautiful and user-friendly designs.",
+      "playlistUrl": "https://www.udemy.com/course/ui-ux-web-design-using-adobe-xd/",
+      "imagePath": "assets/images/ui_ux_design.jpg"
+    },
+    {
+      "title": "Complete Node.js Course: Build Web Applications",
+      "description": "Learn Node.js and build powerful and scalable web applications.",
+      "playlistUrl": "https://www.udemy.com/course/nodejs-the-complete-guide/",
+      "imagePath": "assets/images/nodejs.png"
+    },
+    {
+      "title": "Complete Microsoft Word Course: From Beginner to Advanced",
+      "description": "Master Microsoft Word and become proficient in document creation and formatting.",
+      "playlistUrl": "https://www.udemy.com/course/microsoft-word-2013-from-beginner-to-advanced-and-beyond/",
+      "imagePath": "assets/images/word.jpg"
+    },
+    {
+      "title": "Complete WordPress Course: Build Websites with WordPress",
+      "description": "Learn WordPress and create stunning websites and blogs with ease.",
+      "playlistUrl": "https://www.udemy.com/course/wordpress-for-beginners-course/",
+      "imagePath": "assets/images/wordpress.jpg"
+    },
+    {
+      "title": "Complete Adobe After Effects Course: From Beginner to Expert",
+      "description": "Master Adobe After Effects and create professional motion graphics and visual effects.",
+      "playlistUrl": "https://www.udemy.com/course/aftereffects/",
+      "imagePath": "assets/images/after_effects.jpg"
+    },
+    {
+      "title": "Complete Cybersecurity Course: Beginner to Advanced",
+      "description": "Learn Cybersecurity fundamentals and protect systems from cyber threats.",
+      "playlistUrl": "https://www.udemy.com/course/learn-cyber-security/",
+      "imagePath": "assets/images/cybersecurity.jpg"
+    },
+    {
+      "title": "Complete Game Development Course: Build 2D & 3D Games",
+      "description": "Learn game development and create your own 2D and 3D games from scratch.",
+      "playlistUrl": "https://www.udemy.com/course/the-ultimate-guide-to-game-development-with-unity/",
+      "imagePath": "assets/images/game_development.jpg"
+    },
+    {
+      "title": "Complete JavaFX Course: Build Desktop Applications",
+      "description": "Learn JavaFX and build cross-platform desktop applications.",
+      "playlistUrl": "https://www.udemy.com/course/java-the-complete-java-fx-tutorial-course-for-beginners/",
+      "imagePath": "assets/images/javafx.png"
+    },
+    {
+      "title": "Complete Responsive Web Design Course: HTML & CSS",
+      "description": "Learn Responsive Web Design with HTML and CSS and create mobile-friendly websites.",
+      "playlistUrl": "https://www.udemy.com/course/design-and-develop-a-killer-website-with-html5-and-css3/",
+      "imagePath": "assets/images/responsive_web_design.jpg"
+    },
+    {
+      "title": "Complete Adobe Premiere Pro Course: From Beginner to Expert",
+      "description": "Master Adobe Premiere Pro and create professional-quality videos.",
+      "playlistUrl": "https://www.udemy.com/course/adobe-premiere-pro-video-editing/",
+      "imagePath": "assets/images/premiere_pro.jpg"
+    },
+    {
+      "title": "Complete Python Developer Course: Build Real Projects",
+      "description": "Learn Python and build real-world projects to enhance your programming skills.",
+      "playlistUrl": "https://www.udemy.com/course/complete-python-developer-zero-to-mastery/",
+      "imagePath": "assets/images/python_developer.jpg"
+    },
+    {
+      "title": "Complete Microsoft PowerPoint Course: From Beginner to Advanced",
+      "description": "Master Microsoft PowerPoint and create engaging and professional presentations.",
+      "playlistUrl": "https://www.udemy.com/course/microsoft-powerpoint-2013-from-beginner-to-advanced-and-beyond/",
+      "imagePath": "assets/images/powerpoint.png"
+    },
+    {
+      "title": "Complete Adobe XD Course: UI/UX Design with Adobe XD",
+      "description": "Learn Adobe XD and create interactive and user-friendly designs for web and mobile apps.",
+      "playlistUrl": "https://www.udemy.com/course/ui-ux-design-using-adobe-xd/",
+      "imagePath": "assets/images/adobe_xd.jpg"
+    },
+    {
+      "title": "Complete Microsoft Access Course: From Beginner to Advanced",
+      "description": "Master Microsoft Access and become proficient in database management.",
+      "playlistUrl": "https://www.udemy.com/course/microsoft-access-2013-from-beginner-to-advanced-and-beyond/",
+      "imagePath": "assets/images/access.jpg"
+    },
+    {
+      "title": "Complete Microsoft Outlook Course: From Beginner to Advanced",
+      "description": "Master Microsoft Outlook and become proficient in email management and organization.",
+      "playlistUrl": "https://www.udemy.com/course/microsoft-outlook-2013-from-beginner-to-advanced-and-beyond/",
+      "imagePath": "assets/images/outlook.jpg"
+    },
+    {
+      "title": "Complete Blender Animation Course: Beginner to Expert",
+      "description": "Learn Blender animation and create stunning 3D animations and visual effects.",
+      "playlistUrl": "https://www.udemy.com/course/blender-character-animation/",
+      "imagePath": "assets/images/blender_animation.jpg"
+    },
+    {
+      "title": "Complete HTML & CSS Course: Build Modern Websites",
+      "description": "Learn HTML and CSS and build modern and responsive websites.",
+      "playlistUrl": "https://www.udemy.com/course/design-and-develop-a-killer-website-with-html5-and-css3/",
+      "imagePath": "assets/images/html_css.png"
+    },
+    {
+      "title": "Complete Google Ads Course: Beginner to Advanced",
+      "description": "Master Google Ads and drive targeted traffic to your website.",
+      "playlistUrl": "https://www.udemy.com/course/the-ultimate-google-adwords-training-course/",
+      "imagePath": "assets/images/google_ads.jpg"
+    },
+    {
+      "title": "Complete Microsoft Visio Course: From Beginner to Advanced",
+      "description": "Master Microsoft Visio and create professional diagrams and flowcharts.",
+      "playlistUrl": "https://www.udemy.com/course/microsoft-visio-2013-from-beginner-to-advanced-and-beyond/",
+      "imagePath": "assets/images/visio.png"
+    },
+    {
+      "title": "Complete Adobe InDesign Course: From Beginner to Expert",
+      "description": "Master Adobe InDesign and create professional layouts and publications.",
+      "playlistUrl": "https://www.udemy.com/course/adobe-indesign-course/",
+      "imagePath": "assets/images/indesign.jpg"
+    },
+    {
+      "title": "Complete Microsoft Project Course: From Beginner to Advanced",
+      "description": "Master Microsoft Project and become proficient in project management.",
+      "playlistUrl": "https://www.udemy.com/course/microsoft-project-2013-from-beginner-to-advanced-and-beyond/",
+      "imagePath": "assets/images/project.png"
+    },
+    {
+      "title": "Complete Adobe Lightroom Course: From Beginner to Expert",
+      "description": "Master Adobe Lightroom and enhance your photography skills.",
+      "playlistUrl": "https://www.udemy.com/course/adobe-lightroom-course/",
+      "imagePath": "assets/images/lightroom.jpg"
+    },
+    {
+      "title": "Complete Node.js Express MongoDB Developer Course",
+      "description": "Learn Node.js, Express, and MongoDB and build RESTful APIs and web applications.",
+      "playlistUrl": "https://www.udemy.com/course/nodejs-express-mongodb-bootcamp/",
+      "imagePath": "assets/images/nodejs_express_mongodb.png"
+    },
+    {
+      "title": "Complete SketchUp Course: From Beginner to Advanced",
+      "description": "Learn SketchUp and create 3D models and designs for architecture, interior design, and more.",
+      "playlistUrl": "https://www.udemy.com/course/sketchup-for-architects-and-interior-designers/",
+      "imagePath": "assets/images/sketchup.png"
+    },
+    {
+      "title": "Complete Microsoft OneNote Course: From Beginner to Advanced",
+      "description": "Master Microsoft OneNote and organize your notes and ideas effectively.",
+      "playlistUrl": "https://www.udemy.com/course/microsoft-onenote-2013-from-beginner-to-advanced-and-beyond/",
+      "imagePath": "assets/images/onenote.png"
+    },
+    {
+      "title": "Complete Microsoft Publisher Course: From Beginner to Advanced",
+      "description": "Master Microsoft Publisher and create professional-quality publications.",
+      "playlistUrl": "https://www.udemy.com/course/microsoft-publisher-2013-from-beginner-to-advanced-and-beyond/",
+      "imagePath": "assets/images/publisher.png"
+    },
+    {
+      "title": "Complete Google Analytics Course: Beginner to Advanced",
+      "description": "Master Google Analytics and track website traffic and user behavior effectively.",
+      "playlistUrl": "https://www.udemy.com/course/learn-google-analytics-from-beginner-to-advanced/",
+      "imagePath": "assets/images/google_analytics.png"
+    },
+    {
+      "title": "Complete Swift Programming Course: Beginner to Advanced",
+      "description": "Learn Swift programming language and build iOS and macOS apps.",
+      "playlistUrl": "https://www.udemy.com/course/complete-ios-12-developer-course/",
+      "imagePath": "assets/images/swift.png"
+    },
+    {
+      "title": "Complete jQuery Course: Beginner to Advanced",
+      "description": "Learn jQuery and enhance your web development skills.",
+      "playlistUrl": "https://www.udemy.com/course/learn-jquery/",
+      "imagePath": "assets/images/jquery.jpg"
+    },
+    {
+      "title": "Complete Excel VBA Course: Beginner to Advanced",
+      "description": "Master Excel VBA and automate tasks and processes in Microsoft Excel.",
+      "playlistUrl": "https://www.udemy.com/course/microsoft-excel-vba-macro-programming-introduction/",
+      "imagePath": "assets/images/excel_vba.jpg"
+    },
+    {
+      "title": "Complete Adobe Audition Course: From Beginner to Expert",
+      "description": "Master Adobe Audition and create professional-quality audio recordings and mixes.",
+      "playlistUrl": "https://www.udemy.com/course/adobe-audition-course/",
+      "imagePath": "assets/images/audition.jpg"
+    },
+    {
+      "title": "Complete Rust Programming Course: Beginner to Advanced",
+      "description": "Learn Rust programming language and build fast and safe software.",
+      "playlistUrl": "https://www.udemy.com/course/rust-lang/",
+      "imagePath": "assets/images/rust.jpg"
+    },
+    {
+      "title": "Complete Microsoft SQL Server Course: From Beginner to Advanced",
+      "description": "Master Microsoft SQL Server and become proficient in database management and SQL programming.",
+      "playlistUrl": "https://www.udemy.com/course/microsoft-sql-server-course/",
+      "imagePath": "assets/images/sql_server.jpg"
+    },
+    {
+      "title": "Complete WordPress Theme Development Course: Build Themes",
+      "description": "Learn WordPress theme development and create custom WordPress themes.",
+      "playlistUrl": "https://www.udemy.com/course/wordpress-theme-development-course/",
+      "imagePath": "assets/images/wordpress_theme.jpg"
+    },
+    {
+      "title": "Complete Adobe Dreamweaver Course: From Beginner to Expert",
+      "description": "Master Adobe Dreamweaver and create responsive websites with ease.",
+      "playlistUrl": "https://www.udemy.com/course/adobe-dreamweaver-course/",
+      "imagePath": "assets/images/dreamweaver.jpg"
+    },
+    {
+      "title": "Complete Google Tag Manager Course: From Beginner to Advanced",
+      "description": "Master Google Tag Manager and track website events and user interactions effectively.",
+      "playlistUrl": "https://www.udemy.com/course/complete-google-tag-manager-course/",
+      "imagePath": "assets/images/google_tag_manager.jpg"
+    },
+    {
+      "title": "Complete Adobe XD UI/UX Design Course: From Beginner to Expert",
+      "description": "Master Adobe XD and design beautiful and user-friendly interfaces for web and mobile apps.",
+      "playlistUrl": "https://www.udemy.com/course/adobe-xd-ui-ux-design-course/",
+      "imagePath": "assets/images/xd.jpg"
+    },
+    {
+      "title": "Complete Linux Administration Course: Beginner to Advanced",
+      "description": "Learn Linux administration and manage Linux servers and systems efficiently.",
+      "playlistUrl": "https://www.udemy.com/course/learn-linux-in-5-days/",
+      "imagePath": "assets/images/linux.jpg"
+    },
+    {
+      "title": "Complete Blender 3D Modeling Course: From Beginner to Expert",
+      "description": "Learn Blender 3D modeling and create stunning 3D models and animations.",
+      "playlistUrl": "https://www.udemy.com/course/blender-course/",
+      "imagePath": "assets/images/blender_3d.jpg"
+    },
+    {
+      "title": "Complete Google Sheets Course: Beginner to Advanced",
+      "description": "Master Google Sheets and become proficient in data analysis and visualization.",
+      "playlistUrl": "https://www.udemy.com/course/microsoft-excel-for-beginners/",
+      "imagePath": "assets/images/google_sheets.png"
+    },
+    {
+      "title": "Complete Bootstrap 4 Course: Build Responsive Websites",
+      "description": "Learn Bootstrap 4 and create responsive websites with modern web design techniques.",
+      "playlistUrl": "https://www.udemy.com/course/bootstrap-4-tutorials/",
+      "imagePath": "assets/images/bootstrap4.jpg"
+    },
+    {
+      "title": "Complete Adobe Illustrator Course: From Beginner to Expert",
+      "description": "Master Adobe Illustrator and create stunning vector graphics and illustrations.",
+      "playlistUrl": "https://www.udemy.com/course/adobe-illustrator-the-complete-guide/",
+      "imagePath": "assets/images/illustrator1.jpg"
+    },
+    {
+      "title": "Complete Microsoft Teams Course: From Beginner to Advanced",
+      "description": "Master Microsoft Teams and collaborate effectively with your team.",
+      "playlistUrl": "https://www.udemy.com/course/microsoft-teams-course/",
+      "imagePath": "assets/images/teams.jpg"
+    },
+    {
+      "title": "Complete Adobe Premiere Rush Course: From Beginner to Expert",
+      "description": "Master Adobe Premiere Rush and create professional-quality videos on-the-go.",
+      "playlistUrl": "https://www.udemy.com/course/adobe-premiere-rush-course/",
+      "imagePath": "assets/images/premiere_rush.jpg"
+    },
+    {
+      "title": "Complete Ethical Hacking Course: Beginner to Advanced",
+      "description": "Learn Ethical Hacking and protect systems from cyber threats.",
+      "playlistUrl": "https://www.udemy.com/course/learn-ethical-hacking-from-scratch/",
+      "imagePath": "assets/images/ethical_hacking1.jpg"
+    }
+  ]
+  
