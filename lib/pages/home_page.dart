@@ -110,7 +110,7 @@ class HomePage extends StatelessWidget {
 
   void _shareApp() {
     try {
-      Share.share('Check out this awesome e-learning app!');
+      Share.share('https://elearning-showcase-jy7nf0s.gamma.site/');
     } catch (e) {
       print('Error sharing app: $e');
     }

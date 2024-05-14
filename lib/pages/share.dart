@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 
 class SharePage extends StatelessWidget {
-  const SharePage({super.key});
+  const SharePage({Key? key});
 
-  void shareContent(String content, {String? subject}) {
-    Share.share(content, subject: subject);
+  void shareContent(String deepLink, {String? subject}) {
+    Share.share(deepLink, subject: subject);
   }
 
   @override
@@ -20,15 +20,18 @@ class SharePage extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () {
-                shareContent('Check out this awesome app! Shared via WhatsApp');
+                shareContent(
+                  'https://elearning-showcase-jy7nf0s.gamma.site/',
+                );
               },
               child: const Text('Share via WhatsApp'),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                shareContent('Check out this awesome app! Shared via email',
-                    subject: 'Check out this app');
+                shareContent(
+                  'https://elearning-showcase-jy7nf0s.gamma.site/',
+                );
               },
               child: const Text('Share via Email'),
             ),
@@ -36,7 +39,8 @@ class SharePage extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 shareContent(
-                    'Check out this awesome app! Shared via other apps');
+                  'https://elearning-showcase-jy7nf0s.gamma.site/',
+                );
               },
               child: const Text('Share via Other Apps'),
             ),
