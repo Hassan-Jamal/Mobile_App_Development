@@ -56,6 +56,7 @@ class _AcademicPageState extends State<AcademicPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Academic Page'),
+        backgroundColor: Colors.green,
       ),
       body: Column(
         children: [
@@ -162,7 +163,7 @@ class _AcademicPageState extends State<AcademicPage> {
               onPressed: _showAddSubjectDialog,
               label: const Text('Add Subject'),
               icon: const Icon(Icons.add),
-              backgroundColor: Colors.deepPurple,
+              backgroundColor: Colors.green,
             ),
           ),
           SizedBox(height: 14),
@@ -175,18 +176,18 @@ class _AcademicPageState extends State<AcademicPage> {
               );
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.deepPurple,
+              backgroundColor: Colors.green,
               padding: EdgeInsets.symmetric(vertical: 16, horizontal: 32),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(50),
               ),
               elevation: 10,
-              shadowColor: Colors.deepPurpleAccent.withOpacity(0.5),
+              shadowColor: Colors.green.withOpacity(0.5),
             ),
             child: Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.deepPurpleAccent, Colors.purple],
+                  colors: [Colors.green, Colors.green],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                 ),
@@ -198,7 +199,7 @@ class _AcademicPageState extends State<AcademicPage> {
                 children: [
                   Icon(
                     Icons.shopping_cart,
-                    color: Colors.white,
+                    color: Colors.green,
                   ),
                   SizedBox(width: 10),
                   Text(
@@ -206,7 +207,7 @@ class _AcademicPageState extends State<AcademicPage> {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: Colors.black,
                       letterSpacing: 1.2,
                     ),
                   ),
@@ -300,6 +301,7 @@ class PaymentPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Payment Page'),
+        backgroundColor: Colors.green,
       ),
       body: SingleChildScrollView(
         child: Center(

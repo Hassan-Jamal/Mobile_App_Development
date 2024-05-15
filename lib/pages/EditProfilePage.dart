@@ -65,7 +65,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Edit Profile'),
-        backgroundColor: Colors.deepPurple, // Set app bar color
+        backgroundColor: Colors.teal, // Set app bar color
       ),
       backgroundColor: Colors.grey[200], // Set background color
       body: Padding(
@@ -78,7 +78,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: Colors.deepPurple, // Set title color
+                color: Colors.teal, // Set title color
               ),
             ),
             const SizedBox(height: 24),
@@ -106,7 +106,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               onPressed: _updateProfile,
               child: const Text('Update Profile'),
               style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white, backgroundColor: Colors.deepPurple, // Set text color
+                foregroundColor: Colors.white, backgroundColor: Colors.teal, // Set text color
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),

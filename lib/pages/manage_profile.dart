@@ -49,10 +49,10 @@ class ManageProfile extends StatelessWidget {
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 24,
-            color: Colors.deepPurple,
+            color: Colors.white,
           ),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.teal,
         elevation: 0,
       ),
       body: Center(
@@ -75,7 +75,7 @@ class ManageProfile extends StatelessWidget {
               child: const Icon(
                 Icons.account_circle,
                 size: 100,
-                color: Colors.deepPurple,
+                color: Colors.teal,
               ),
             ),
             const SizedBox(height: 40),
@@ -84,14 +84,14 @@ class ManageProfile extends StatelessWidget {
               style: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
-                color: Colors.deepPurple,
+                color: Colors.teal,
               ),
             ),
             const SizedBox(height: 60),
             ElevatedButton(
               onPressed: () => _editProfile(context),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.deepPurple,
+                backgroundColor: Colors.teal,
                 padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
@@ -106,7 +106,7 @@ class ManageProfile extends StatelessWidget {
             ElevatedButton(
               onPressed: () => _changePassword(context),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.deepPurple,
+                backgroundColor: Colors.teal,
                 padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),

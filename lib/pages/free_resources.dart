@@ -48,7 +48,7 @@ class _FreeResourcesPageState extends State<FreeResourcesPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Free Resources'),
-        backgroundColor: Colors.deepPurple, // Change app bar color
+        backgroundColor: Colors.orange, // Change app bar color
         actions: [
           IconButton(
             onPressed: () {},
@@ -83,6 +83,9 @@ class _FreeResourcesPageState extends State<FreeResourcesPage> {
                         child: Card(
                           margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                           elevation: 4,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
                           child: Padding(
                             padding: EdgeInsets.all(16),
                             child: Row(
@@ -120,10 +123,13 @@ class _FreeResourcesPageState extends State<FreeResourcesPage> {
                                         },
                                         child: Text(
                                           'Access Course',
-                                          style: TextStyle(fontSize: 16, color: Colors.black),
+                                          style: TextStyle(fontSize: 16),
                                         ),
                                         style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.deepPurple, // Button color
+                                          foregroundColor: Colors.white, backgroundColor: Colors.orange, // Text color
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(8),
+                                          ),
                                         ),
                                       ),
                                     ],

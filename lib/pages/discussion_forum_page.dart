@@ -220,9 +220,9 @@ class _DiscussionForumPageState extends State<DiscussionForumPage> {
       appBar: AppBar(
         title: const Text(
           "Discussion Forum",
-          style: TextStyle(
-              fontFamily: 'Montserrat', fontWeight: FontWeight.bold),
+        
         ),
+        backgroundColor: Colors.red,
         actions: [
           IconButton(
             icon: const Icon(Icons.search),
@@ -263,15 +263,16 @@ class _DiscussionForumPageState extends State<DiscussionForumPage> {
               "Welcome to the Discussion Forum",
               style: TextStyle(
                   fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Roboto'),
+                  fontWeight: FontWeight.bold
+                  ),
             ),
+            //backgroundColor: Colors.red,
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () => _startNewDiscussion(context),
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.white,
-                backgroundColor: Colors.blue,
+                backgroundColor: Colors.red,
                 padding: const EdgeInsets.symmetric(
                     horizontal: 40, vertical: 16),
                 shape: RoundedRectangleBorder(
@@ -284,7 +285,7 @@ class _DiscussionForumPageState extends State<DiscussionForumPage> {
               onPressed: () => _sendMessage(context),
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.white,
-                backgroundColor: Colors.orange,
+                backgroundColor: Colors.red,
                 padding: const EdgeInsets.symmetric(
                     horizontal: 40, vertical: 16),
                 shape: RoundedRectangleBorder(
@@ -323,9 +324,9 @@ class NewDiscussionPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           "New Discussion",
-          style: TextStyle(
-              fontFamily: 'Montserrat', fontWeight: FontWeight.bold),
+          
         ),
+        backgroundColor: Colors.red,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -391,7 +392,7 @@ class NewDiscussionPage extends StatelessWidget {
                 },
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,
-                  backgroundColor: Colors.blue,
+                  backgroundColor: Colors.red,
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0)),
