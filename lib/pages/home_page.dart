@@ -1,5 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firstproject/pages/live_classes.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:firstproject/pages/personalized_recommendations_page.dart'; // Import the personalized recommendations page
 import 'package:firstproject/widgets/drawer.dart';
 import 'package:firstproject/pages/academic_page.dart';
@@ -8,7 +9,8 @@ import 'package:firstproject/pages/manage_profile.dart';
 import 'package:firstproject/pages/profile_info.dart';
 import 'package:firstproject/pages/free_resources.dart';
 import 'package:share/share.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key});
@@ -94,6 +96,18 @@ class HomePage extends StatelessWidget {
                 );
               },
               color: Colors.deepOrange, // Set card color
+            ),
+            const SizedBox(height: 16),
+            _buildModuleCard(
+              title: 'Live Classes', // Add the live classes module
+              icon: Icons.live_tv, // You can change the icon to fit your design
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LiveClassesPage()),
+                );
+              },
+              color: Colors.yellow, // Set card color
             ),
             const SizedBox(height: 16),
             _buildModuleCard(

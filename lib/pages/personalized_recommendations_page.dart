@@ -32,9 +32,9 @@ class _PersonalizedRecommendationsPageState
             .doc(user.uid)
             .get();
 
-        // Extract user interests, past courses, etc. from userData
-        // Use machine learning algorithms to generate recommendations
-        List<Course> recommendations = generateRecommendations(userData);
+        // Implement recommendation algorithms
+        List<Course> recommendations =
+            generateRecommendations(userData);
 
         setState(() {
           recommendedCourses = recommendations;
@@ -46,9 +46,9 @@ class _PersonalizedRecommendationsPageState
   }
 
   List<Course> generateRecommendations(DocumentSnapshot userData) {
-    // Implement machine learning algorithms to generate personalized recommendations
-    // This function should return a list of recommended courses based on user data
-    // For demonstration purposes, we'll return a hardcoded list of sample courses
+    // Apply recommendation algorithms to generate personalized recommendations
+    // Here you can implement collaborative filtering, content-based filtering, etc.
+    // For demonstration purposes, return hardcoded sample courses
     return [
       Course(
         title: 'Introduction to Machine Learning',
