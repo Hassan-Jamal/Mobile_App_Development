@@ -1,7 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DiscussionForumPage extends StatefulWidget {
@@ -29,29 +28,20 @@ class _DiscussionForumPageState extends State<DiscussionForumPage> {
 
     // Apply filters based on selected options
     if (_filterOption1 && !_filterOption2) {
-      // Apply filter option 1
-      // For example, filter discussions alphabetically
       discussionsQuery = discussionsQuery.orderBy('title');
     } else if (!_filterOption1 && _filterOption2) {
-      // Apply filter option 2
-      // For example, filter discussions by date
       discussionsQuery = discussionsQuery.orderBy('timestamp');
     } else if (_filterOption1 && _filterOption2) {
-      // Apply both filters
-      // For example, filter discussions alphabetically and by date
-      discussionsQuery =
-          discussionsQuery.orderBy('title').orderBy('timestamp');
+      discussionsQuery = discussionsQuery.orderBy('title').orderBy('timestamp');
     }
 
     // Execute the query
     discussionsQuery.get().then((querySnapshot) {
-      // Process the results
       querySnapshot.docs.forEach((doc) {
         // Handle each discussion document
         // For example, update UI to display discussions
       });
     }).catchError((error) {
-      // Handle any errors
       print("Failed to fetch discussions: $error");
     });
   }
@@ -163,6 +153,13 @@ class _DiscussionForumPageState extends State<DiscussionForumPage> {
           'creator': user.uid,
           'timestamp': DateTime.now(),
         });
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Discussion submitted successfully'),
+            backgroundColor: Colors.green,
+          ),
+        );
       }
     }
 
@@ -170,43 +167,36 @@ class _DiscussionForumPageState extends State<DiscussionForumPage> {
     _fetchMessages();
   }
 
- void _fetchMessages() {
-  FirebaseFirestore.instance
-      .collection('discussions')
-      .orderBy('timestamp', descending: true)
-      .limit(20) // Limit the number of messages to fetch
-      .snapshots()
-      .listen((QuerySnapshot snapshot) {
-    // Clear existing messages list before updating with new messages
-    setState(() {
-      _messages.clear();
-    });
-
-    snapshot.docs.forEach((DocumentSnapshot doc) {
-      // Extract message data from document
-      final title = doc['title'];
-      final content = doc['content'];
-      final creator = doc['creator'];
-      
-      // Convert Firestore Timestamp to Dart DateTime
-      final timestamp = (doc['timestamp'] as Timestamp).toDate();
-
-      // Create a Message object from the data
-      final message = Message(
-        title: title,
-        content: content,
-        creator: creator,
-        timestamp: timestamp,
-      );
-
-      // Add the message to the list of messages
+  void _fetchMessages() {
+    FirebaseFirestore.instance
+        .collection('discussions')
+        .orderBy('timestamp', descending: true)
+        .limit(20)
+        .snapshots()
+        .listen((QuerySnapshot snapshot) {
       setState(() {
-        _messages.add(message);
+        _messages.clear();
+      });
+
+      snapshot.docs.forEach((DocumentSnapshot doc) {
+        final title = doc['title'] ?? '';
+        final content = doc['content'] ?? '';
+        final creator = doc['creator'] ?? '';
+        final timestamp = (doc['timestamp'] as Timestamp).toDate();
+
+        final message = Message(
+          title: title,
+          content: content,
+          creator: creator,
+          timestamp: timestamp,
+        );
+
+        setState(() {
+          _messages.add(message);
+        });
       });
     });
-  });
-}
-
+  }
 
   void _performSearch(BuildContext context, String query) {
     ScaffoldMessenger.of(context)
@@ -220,7 +210,6 @@ class _DiscussionForumPageState extends State<DiscussionForumPage> {
       appBar: AppBar(
         title: const Text(
           "Discussion Forum",
-        
         ),
         backgroundColor: Colors.red,
         actions: [
@@ -230,8 +219,7 @@ class _DiscussionForumPageState extends State<DiscussionForumPage> {
               showSearch(
                 context: context,
                 delegate: SearchBarDelegate(
-                  onSearch: (query) =>
-                      _performSearch(context, query),
+                  onSearch: (query) => _performSearch(context, query),
                 ),
               );
             },
@@ -248,59 +236,25 @@ class _DiscussionForumPageState extends State<DiscussionForumPage> {
           ),
         ],
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              'assets/images/discuss_image.png',
-              fit: BoxFit.cover,
-              width: 200,
-              height: 200,
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              "Welcome to the Discussion Forum",
-              style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold
-                  ),
-            ),
-            //backgroundColor: Colors.red,
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () => _startNewDiscussion(context),
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor: Colors.red,
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 40, vertical: 16),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30)),
-              ),
-              child: const Text("Start New Discussion"),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () => _sendMessage(context),
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor: Colors.red,
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 40, vertical: 16),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30)),
-              ),
-              child: const Text("Send Message"),
-            ),
-          ],
-        ),
+      body: ListView.builder(
+        itemCount: _messages.length,
+        itemBuilder: (BuildContext context, int index) {
+          final message = _messages[index];
+          return ListTile(
+            title: Text(message.title),
+            subtitle: Text(message.content),
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _startNewDiscussion(context),
+        child: const Icon(Icons.add),
+        backgroundColor: Colors.red,
       ),
     );
   }
 }
 
-// Define a class to represent individual messages
 class Message {
   final String title;
   final String content;
@@ -320,11 +274,13 @@ class NewDiscussionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController _titleController = TextEditingController();
+    final TextEditingController _contentController = TextEditingController();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
           "New Discussion",
-          
         ),
         backgroundColor: Colors.red,
       ),
@@ -336,12 +292,14 @@ class NewDiscussionPage extends StatelessWidget {
             const Text(
               "Title:",
               style: TextStyle(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87),
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
             ),
             const SizedBox(height: 8.0),
             TextFormField(
+              controller: _titleController,
               decoration: InputDecoration(
                 hintText: "Enter discussion title",
                 filled: true,
@@ -350,21 +308,23 @@ class NewDiscussionPage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10.0),
                   borderSide: BorderSide.none,
                 ),
-                contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16.0, vertical: 12.0),
               ),
             ),
             const SizedBox(height: 16.0),
             const Text(
               "Content:",
               style: TextStyle(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87),
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
             ),
             const SizedBox(height: 8.0),
             Expanded(
               child: TextFormField(
+                controller: _contentController,
                 maxLines: null,
                 expands: true,
                 decoration: InputDecoration(
@@ -375,8 +335,8 @@ class NewDiscussionPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10.0),
                     borderSide: BorderSide.none,
                   ),
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                  contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16.0, vertical: 12.0),
                 ),
               ),
             ),
@@ -385,17 +345,30 @@ class NewDiscussionPage extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pop(context, {
-                    'title': 'Discussion Title', // Replace with actual title
-                    'content': 'Discussion Content', // Replace with actual content
-                  });
+                  final title = _titleController.text.trim();
+                  final content = _contentController.text.trim();
+
+                  if (title.isNotEmpty && content.isNotEmpty) {
+                    Navigator.pop(context, {
+                      'title': title,
+                      'content': content,
+                    });
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Please enter both title and content.'),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,
                   backgroundColor: Colors.red,
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0)),
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
                 ),
                 child: const Text("Submit"),
               ),
@@ -436,10 +409,16 @@ class SearchBarDelegate extends SearchDelegate<String?> {
 
   @override
   Widget buildResults(BuildContext context) {
-    onSearch(query);
-    return Center(
-      child: Text("Search results for '$query'"),
-    );
+    if (query.isNotEmpty) {
+      onSearch(query);
+      return Center(
+        child: Text("Search results for '$query'"),
+      );
+    } else {
+      return Center(
+        child: Text("No search query entered"),
+      );
+    }
   }
 
   @override

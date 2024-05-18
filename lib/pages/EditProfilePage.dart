@@ -29,7 +29,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     }
   }
 
-  Future<void> _updateProfile() async {
+  Future<void> _updateProfile(BuildContext context) async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       try {
@@ -45,7 +45,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
           'email': _emailController.text.trim(),
         });
 
-        Navigator.pop(context, 'Profile updated successfully!');
+        // Show success message
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Profile updated successfully!'),
+            duration: Duration(seconds: 2), // Adjust duration as needed
+          ),
+        );
+
+        // Navigator.pop(context, 'Profile updated successfully!');
       } catch (e) {
         print('Failed to update profile: $e');
         if (e is FirebaseAuthException && e.code == 'requires-recent-login') {
@@ -103,10 +111,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
             ),
             const SizedBox(height: 24),
             ElevatedButton(
-              onPressed: _updateProfile,
+              onPressed: () => _updateProfile(context),
               child: const Text('Update Profile'),
               style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white, backgroundColor: Colors.teal, // Set text color
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.teal, // Set text color
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),

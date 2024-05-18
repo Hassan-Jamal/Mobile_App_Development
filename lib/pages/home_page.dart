@@ -27,7 +27,7 @@ class HomePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ProfileInfo(profileName: "Guest", gmailUsername: "guest@gmail.com"),
+            const ProfileInfo(), // Updated to match the new constructor
             const SizedBox(height: 16),
             _buildModuleCard(
               title: 'Google Classroom',
@@ -36,6 +36,11 @@ class HomePage extends StatelessWidget {
                 _launchURL('https://classroom.google.com/');
               },
               color: Colors.blue, // Set card color
+              gradient: LinearGradient(
+                colors: [Colors.blue.shade400, Colors.blue.shade700],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
             ),
             const SizedBox(height: 16),
             _buildModuleCard(
@@ -48,6 +53,11 @@ class HomePage extends StatelessWidget {
                 );
               },
               color: Colors.green, // Set card color
+              gradient: LinearGradient(
+                colors: [Colors.green.shade400, Colors.green.shade700],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
             ),
             const SizedBox(height: 16),
             _buildModuleCard(
@@ -60,6 +70,11 @@ class HomePage extends StatelessWidget {
                 );
               },
               color: Colors.orange, // Set card color
+              gradient: LinearGradient(
+                colors: [Colors.orange.shade400, Colors.orange.shade700],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
             ),
             const SizedBox(height: 16),
             _buildModuleCard(
@@ -72,6 +87,11 @@ class HomePage extends StatelessWidget {
                 );
               },
               color: Colors.red, // Set card color
+              gradient: LinearGradient(
+                colors: [Colors.red.shade400, Colors.red.shade700],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
             ),
             const SizedBox(height: 16),
             _buildModuleCard(
@@ -84,6 +104,11 @@ class HomePage extends StatelessWidget {
                 );
               },
               color: Colors.teal, // Set card color
+              gradient: LinearGradient(
+                colors: [Colors.teal.shade400, Colors.teal.shade700],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
             ),
             const SizedBox(height: 16),
             _buildModuleCard(
@@ -96,6 +121,11 @@ class HomePage extends StatelessWidget {
                 );
               },
               color: Colors.deepOrange, // Set card color
+              gradient: LinearGradient(
+                colors: [Colors.deepOrange.shade400, Colors.deepOrange.shade700],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
             ),
             const SizedBox(height: 16),
             _buildModuleCard(
@@ -108,6 +138,11 @@ class HomePage extends StatelessWidget {
                 );
               },
               color: Colors.yellow, // Set card color
+              gradient: LinearGradient(
+                colors: [Colors.yellow.shade400, Colors.yellow.shade700],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
             ),
             const SizedBox(height: 16),
             _buildModuleCard(
@@ -117,6 +152,11 @@ class HomePage extends StatelessWidget {
                 _shareApp();
               },
               color: Colors.purple, // Set card color
+              gradient: LinearGradient(
+                colors: [Colors.purple.shade400, Colors.purple.shade700],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
             ),
           ],
         ),
@@ -155,18 +195,32 @@ class HomePage extends StatelessWidget {
     required IconData icon,
     required VoidCallback onTap,
     required Color color,
+    required Gradient gradient,
   }) {
-    return Card(
-      elevation: 4,
-      margin: const EdgeInsets.only(bottom: 16),
-      color: color, // Use color provided
-      child: ListTile(
-        leading: Icon(icon, color: Colors.white), 
-        title: Text(
-          title,
-          style: const TextStyle(color: Colors.white), 
+    return Container(
+      decoration: BoxDecoration(
+        gradient: gradient,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black26,
+            blurRadius: 8,
+            offset: Offset(2, 2),
+          ),
+        ],
+      ),
+      child: Card(
+        elevation: 0,
+        margin: const EdgeInsets.only(bottom: 16),
+        color: Colors.transparent,
+        child: ListTile(
+          leading: Icon(icon, color: Colors.white),
+          title: Text(
+            title,
+            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+          onTap: onTap,
         ),
-        onTap: onTap,
       ),
     );
   }

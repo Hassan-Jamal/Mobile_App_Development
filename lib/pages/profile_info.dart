@@ -17,14 +17,7 @@ class QuoteProvider {
 }
 
 class ProfileInfo extends StatefulWidget {
-  final String profileName;
-  final String gmailUsername;
-
-  const ProfileInfo({
-    required this.profileName,
-    required this.gmailUsername,
-    Key? key,
-  }) : super(key: key);
+  const ProfileInfo({Key? key}) : super(key: key);
 
   @override
   _ProfileInfoState createState() => _ProfileInfoState();
@@ -33,7 +26,7 @@ class ProfileInfo extends StatefulWidget {
 class _ProfileInfoState extends State<ProfileInfo> {
   late String _quote = '';
   final QuoteProvider _quoteProvider = QuoteProvider();
-  late User? _user;
+  User? _user;
   late Timer _quoteTimer;
 
   @override

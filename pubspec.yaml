@@ -47,7 +47,7 @@ dependencies:
   flutter_cache_manager: ^3.3.2
   http: ^1.2.1
   paypal_sdk: ^1.0.8
-
+  animated_text_kit: ^4.2.2
 
 dev_dependencies:
   flutter_test:

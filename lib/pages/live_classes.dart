@@ -8,6 +8,7 @@ class LiveSession {
   final String sessionId;
   final String teacher;
   final String platform;
+  final String url; // URL to join or view the session
 
   LiveSession({
     required this.title,
@@ -15,8 +16,10 @@ class LiveSession {
     required this.sessionId,
     required this.teacher,
     required this.platform,
+    required this.url,
   });
 }
+
 class LiveClassesPage extends StatefulWidget {
   @override
   _LiveClassesPageState createState() => _LiveClassesPageState();
@@ -24,6 +27,8 @@ class LiveClassesPage extends StatefulWidget {
 
 class _LiveClassesPageState extends State<LiveClassesPage> {
   bool showRequestedSessionCard = true;
+  String searchQuery = '';
+  TextEditingController searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -34,15 +39,16 @@ class _LiveClassesPageState extends State<LiveClassesPage> {
         actions: [
           IconButton(
             onPressed: () {
-              // Add your action for the first button here
+              // Handle notifications
             },
-            icon: Icon(Icons.notifications), // Add your icon for the first button here
+            icon: Icon(Icons.notifications),
           ),
           IconButton(
             onPressed: () {
-              // Add your action for the second button here
+              // Handle search functionality
+              _showSearchDialog(context);
             },
-            icon: Icon(Icons.search), // Add your icon for the second button here
+            icon: Icon(Icons.search),
           ),
         ],
       ),
@@ -70,7 +76,7 @@ class _LiveClassesPageState extends State<LiveClassesPage> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                _startLiveSession('sessionId', 'Zoom'); // Replace 'sessionId' with the actual session ID and 'Zoom' with the chosen platform
+                _startLiveSession('sessionId', 'Zoom');
               },
               child: Text('Start Live Session'),
             ),
@@ -79,6 +85,7 @@ class _LiveClassesPageState extends State<LiveClassesPage> {
       ),
     );
   }
+
   Widget _buildSessionList(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance.collection('live_sessions').snapshots(),
@@ -95,20 +102,28 @@ class _LiveClassesPageState extends State<LiveClassesPage> {
         return ListView(
           children: [
             if (showRequestedSessionCard) _buildRequestedSessionCard(),
-            ...snapshot.data!.docs.map((doc) {
+            ...snapshot.data!.docs
+                .where((doc) => doc['title']
+                    .toString()
+                    .toLowerCase()
+                    .contains(searchQuery.toLowerCase()))
+                .map((doc) {
               LiveSession session = LiveSession(
                 title: doc['title'],
                 sessionType: doc['sessionType'],
                 sessionId: doc.id,
                 teacher: doc['teacher'],
                 platform: doc['platform'],
+                url: doc['url'],
               );
               return ListTile(
                 title: Text(session.title),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(session.sessionType == 'live' ? 'Live Session' : 'Recorded Session'),
+                    Text(session.sessionType == 'live'
+                        ? 'Live Session'
+                        : 'Recorded Session'),
                     Text('Teacher: ${session.teacher}'),
                   ],
                 ),
@@ -149,7 +164,6 @@ class _LiveClassesPageState extends State<LiveClassesPage> {
             Text('Email: $email'),
             Text('Session Topic: $sessionTopic'),
             Text('Preferred Date and Time: $preferredDateTime'),
-            // Add more details such as teacher name and platform here
           ],
         ),
       ),
@@ -203,7 +217,6 @@ class _LiveClassesPageState extends State<LiveClassesPage> {
                     String sessionTopic = sessionTopicController.text;
                     String dateTime = dateTimeController.text;
                     _submitRequest(name, email, sessionTopic, dateTime, parentContext);
-                    // Set showRequestedSessionCard to false
                     setState(() {
                       showRequestedSessionCard = false;
                     });
@@ -288,7 +301,6 @@ class _LiveClassesPageState extends State<LiveClassesPage> {
             Text('Email: $email'),
             Text('Session Topic: $sessionTopic'),
             Text('Preferred Date and Time: $preferredDateTime'),
-            // Add more details such as teacher name and platform here
           ],
         ),
       ),
@@ -315,13 +327,15 @@ class _LiveClassesPageState extends State<LiveClassesPage> {
     );
   }
 
-  void _joinLiveSession(BuildContext context, LiveSession session) {
+  void _joinLiveSession(BuildContext context, LiveSession session) async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-    // Update the Firestore document to indicate that a user has joined the live session
-    firestore.collection('live_sessions').doc(session.sessionId).update({
-      'participants': FieldValue.arrayUnion(['currentUserUid']), // Add the UID of the current user
-    }).then((_) {
+    try {
+      // Update the Firestore document to indicate that a user has joined the live session
+      await firestore.collection('live_sessions').doc(session.sessionId).update({
+        'participants': FieldValue.arrayUnion(['currentUserUid']), // Add the UID of the current user
+      });
+
       // Show a confirmation dialog
       showDialog(
         context: context,
@@ -332,15 +346,14 @@ class _LiveClassesPageState extends State<LiveClassesPage> {
             actions: [
               TextButton(
                 onPressed: () {
-                  // Close the dialog
                   Navigator.of(context).pop();
-                  // Implement your logic to join the live session here
+                  // Launch the URL to join the live session
+                  _launchURL(session.url);
                 },
                 child: Text('Join'),
               ),
               TextButton(
                 onPressed: () {
-                  // Close the dialog
                   Navigator.of(context).pop();
                 },
                 child: Text('Cancel'),
@@ -349,20 +362,21 @@ class _LiveClassesPageState extends State<LiveClassesPage> {
           );
         },
       );
-    }).catchError((error) {
-      // Handle errors
+    } catch (error) {
       print('Error joining live session: $error');
       _showErrorDialog(context, 'Error joining live session: $error');
-    });
+    }
   }
 
-  void _viewRecordedSession(BuildContext context, LiveSession session) {
+  void _viewRecordedSession(BuildContext context, LiveSession session) async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-    // Update the Firestore document to log that the user has viewed the recorded session
-    firestore.collection('live_sessions').doc(session.sessionId).update({
-      'views': FieldValue.increment(1), // Increment the views count
-    }).then((_) {
+    try {
+      // Update the Firestore document to log that the user has viewed the recorded session
+      await firestore.collection('live_sessions').doc(session.sessionId).update({
+        'views': FieldValue.increment(1), // Increment the views count
+      });
+
       // Show a confirmation dialog
       showDialog(
         context: context,
@@ -373,15 +387,14 @@ class _LiveClassesPageState extends State<LiveClassesPage> {
             actions: [
               TextButton(
                 onPressed: () {
-                  // Close the dialog
                   Navigator.of(context).pop();
-                  // Implement your logic to view the recorded session here
+                  // Launch the URL to view the recorded session
+                  _launchURL(session.url);
                 },
                 child: Text('View'),
               ),
               TextButton(
                 onPressed: () {
-                  // Close the dialog
                   Navigator.of(context).pop();
                 },
                 child: Text('Cancel'),
@@ -390,40 +403,83 @@ class _LiveClassesPageState extends State<LiveClassesPage> {
           );
         },
       );
-    }).catchError((error) {
-      // Handle errors
+    } catch (error) {
       print('Error viewing recorded session: $error');
       _showErrorDialog(context, 'Error viewing recorded session: $error');
-    });
+    }
   }
 
-  void _startLiveSession(String sessionId, String platform) {
+  void _startLiveSession(String sessionId, String platform) async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-    // Implement logic to start the live session on the chosen platform
-    if (platform == 'Zoom') {
-      // Logic to start the session on Zoom
-      print('Starting live session on Zoom');
-    } else if (platform == 'Google Meet') {
-      // Logic to start the session on Google Meet
-      print('Starting live session on Google Meet');
-    } else if (platform == 'Microsoft Teams') {
-      // Logic to start the session on Microsoft Teams
-      print('Starting live session on Microsoft Teams');
-    } else {
-      print('Platform not supported');
-      return;
-    }
+    try {
+      // Implement logic to start the live session on the chosen platform
+      String url;
+      if (platform == 'Zoom') {
+        url = 'https://zoom.us/start/sessionId';
+      } else if (platform == 'Google Meet') {
+        url = 'https://meet.google.com/start/sessionId';
+      } else if (platform == 'Microsoft Teams') {
+        url = 'https://teams.microsoft.com/start/sessionId';
+      } else {
+        throw Exception('Platform not supported');
+      }
 
-    // Update the Firestore document to indicate that the live session has started
-    firestore.collection('live_sessions').doc(sessionId).update({
-      'started': true, // Add a field to indicate that the session has started
-      'start_time': FieldValue.serverTimestamp(), // Add the start time of the session
-    }).then((_) {
-      print('Live session started');
-    }).catchError((error) {
-      // Handle errors
+      // Update the Firestore document to indicate that the live session has started
+      await firestore.collection('live_sessions').doc(sessionId).update({
+        'started': true, // Add a field to indicate that the session has started
+        'start_time': FieldValue.serverTimestamp(), // Add the start time of the session
+      });
+
+      // Launch the URL to start the live session
+      _launchURL(url);
+    } catch (error) {
       print('Error starting live session: $error');
-    });
+      _showErrorDialog(context, 'Error starting live session: $error');
+    }
+  }
+
+  void _showSearchDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Search Sessions'),
+          content: TextField(
+            controller: searchController,
+            decoration: InputDecoration(labelText: 'Enter session title'),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  searchQuery = searchController.text;
+                });
+                Navigator.of(context).pop();
+              },
+              child: Text('Search'),
+            ),
+            TextButton(
+              onPressed: () {
+                searchController.clear();
+                setState(() {
+                  searchQuery = '';
+                });
+                Navigator.of(context).pop();
+              },
+              child: Text('Clear'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }
