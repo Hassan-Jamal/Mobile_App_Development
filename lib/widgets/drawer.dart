@@ -7,6 +7,7 @@ import 'package:firstproject/pages/manage_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class MyDrawer extends StatefulWidget {
   const MyDrawer({Key? key}) : super(key: key);
@@ -33,21 +34,19 @@ class _MyDrawerState extends State<MyDrawer> {
       _imagePath = prefs.getString(_cacheKey) ?? "";
     });
     // Load other user information here
-      User? user = FirebaseAuth.instance.currentUser;
-  if (user != null) {
-    _profileName = user.displayName ?? "";
-    _gmailUsername = user.email ?? "";
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      _profileName = user.displayName ?? "";
+      _gmailUsername = user.email ?? "";
 
-
-    if (_imagePath != "assets/images/camera.png") {
-      prefs.setString(_cacheKey, _imagePath); // Save the image path to SharedPreferences
+      if (_imagePath != "assets/images/camera.png") {
+        prefs.setString(_cacheKey, _imagePath); // Save the image path to SharedPreferences
+      }
+    } else {
+      _profileName = "Guest";
+      _gmailUsername = "guest@gmail.com";
     }
-  } else {
-    _profileName = "Guest";
-    _gmailUsername = "guest@gmail.com";
   }
-}
-  
 
   Future<void> _getImage() async {
     final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -61,11 +60,42 @@ class _MyDrawerState extends State<MyDrawer> {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString(_cacheKey, _imagePath); // Save the image path to SharedPreferences
 
-      // You can also save the image bytes to cache or storage if needed
+      // Upload image to Firebase Storage
+      String userId = FirebaseAuth.instance.currentUser!.uid;
+      String imagePath = 'profile_pictures/$userId/${DateTime.now().millisecondsSinceEpoch}.jpg';
+      firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance.ref(imagePath);
+      await ref.putFile(imageFile);
+
+      // Get the download URL and save it to Firestore
+      String downloadURL = await ref.getDownloadURL();
+      FirebaseFirestore.instance.collection('users').doc(userId).update({
+        'profile_picture': downloadURL,
+      });
     }
   }
 
-Future<void> _signOut() async {
+  Future<void> _removeImage() async {
+    // Delete image from Firebase Storage
+    String userId = FirebaseAuth.instance.currentUser!.uid;
+    String imagePath = 'profile_pictures/$userId/${DateTime.now().millisecondsSinceEpoch}.jpg';
+    firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance.ref(imagePath);
+    await ref.delete();
+
+    // Remove profile picture URL from Firestore
+    FirebaseFirestore.instance.collection('users').doc(userId).update({
+      'profile_picture': null,
+    });
+
+    // Remove profile picture path from SharedPreferences
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove(_cacheKey);
+
+    setState(() {
+      _imagePath = ""; // Clear the image path
+    });
+  }
+
+  Future<void> _signOut() async {
     try {
       await FirebaseAuth.instance.signOut();
       Navigator.pushReplacementNamed(context, '/login');
@@ -117,7 +147,7 @@ Future<void> _signOut() async {
               ),
             ),
             // Other list tile items
-              ListTile(
+            ListTile(
               leading: Icon(Icons.home, color: Colors.white),
               title: Text(
                 'Home',
@@ -169,9 +199,10 @@ Future<void> _signOut() async {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => DiscussionForumPage()),
-                 );
+                );
               },
             ),
+          
           ],
         ),
       ),

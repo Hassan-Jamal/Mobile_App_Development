@@ -1,3 +1,4 @@
+import 'package:firstproject/pages/ai_tutor.dart';
 import 'package:firstproject/pages/live_classes.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -13,7 +14,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key});
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +67,7 @@ class HomePage extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => FreeResourcesPage()), 
+                  MaterialPageRoute(builder: (context) => FreeResourcesPage()),
                 );
               },
               color: Colors.orange, // Set card color
@@ -112,8 +113,8 @@ class HomePage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             _buildModuleCard(
-              title: 'Personalized Recommendations', // Add the personalized recommendations module
-              icon: Icons.lightbulb, // You can change the icon to fit your design
+              title: 'Personalized Recommendations',
+              icon: Icons.lightbulb,
               onTap: () {
                 Navigator.push(
                   context,
@@ -129,8 +130,8 @@ class HomePage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             _buildModuleCard(
-              title: 'Live Classes', // Add the live classes module
-              icon: Icons.live_tv, // You can change the icon to fit your design
+              title: 'Live Classes',
+              icon: Icons.live_tv,
               onTap: () {
                 Navigator.push(
                   context,
@@ -140,6 +141,23 @@ class HomePage extends StatelessWidget {
               color: Colors.yellow, // Set card color
               gradient: LinearGradient(
                 colors: [Colors.yellow.shade400, Colors.yellow.shade700],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+            ),
+            const SizedBox(height: 16),
+            _buildModuleCard(
+              title: 'AI Tutor',
+              icon: Icons.smart_toy,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AITutorPage()),
+                );
+              },
+              color: Colors.cyan, // Set card color
+              gradient: LinearGradient(
+                colors: [Colors.cyan.shade400, Colors.cyan.shade700],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
@@ -168,7 +186,7 @@ class HomePage extends StatelessWidget {
   Future<void> signOut(BuildContext context) async {
     try {
       await FirebaseAuth.instance.signOut();
-      Navigator.pushReplacementNamed(context, '/login'); 
+      Navigator.pushReplacementNamed(context, '/login');
     } catch (e) {
       print('Sign out failed: $e');
     }
